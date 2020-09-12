@@ -1,9 +1,10 @@
 import * as express from 'express';
 import {Application} from 'express';
 
-import {ConfigurationConstants} from './configuration.constants';
+import {RootController} from './controllers/root-controller';
 
-import {RootController} from '../controllers/root-controller';
+import {Configuration} from './configuration/configuration';
+const CONFIG: Configuration = require('./configuration/configuration.json');
 
 export class ClassroomExtenderApplication {
   private app: Application;
@@ -21,8 +22,8 @@ export class ClassroomExtenderApplication {
   }
 
   private setAppListening(): void {
-    this.app.listen(ConfigurationConstants.PORT, () => {
-      console.log('ClassroomExtender is listening on http://localhost:' + ConfigurationConstants.PORT);
+    this.app.listen(CONFIG.server.port, () => {
+      console.log('ClassroomExtender is listening on http://localhost:' + CONFIG.server.port);
     });
   }
 } 
