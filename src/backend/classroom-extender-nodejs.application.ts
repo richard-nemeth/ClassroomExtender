@@ -6,7 +6,7 @@ import {RootController} from './controllers/root-controller';
 import {Configuration} from './configuration/configuration';
 const CONFIG: Configuration = require('./configuration/configuration.json');
 
-export class ClassroomExtenderApplication {
+export class ClassroomExtenderNodeJSApplication {
   private app: Application;
 
   public constructor() {

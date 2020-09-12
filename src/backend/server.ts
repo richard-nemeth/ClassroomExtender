@@ -1,3 +1,3 @@
-import {ClassroomExtenderApplication} from "./classroom-extender.application";
+import {ClassroomExtenderNodeJSApplication} from "./classroom-extender-nodejs.application";
 
-const APPLICAITON: ClassroomExtenderApplication = new ClassroomExtenderApplication();
+const APPLICAITON: ClassroomExtenderNodeJSApplication = new ClassroomExtenderNodeJSApplication();
