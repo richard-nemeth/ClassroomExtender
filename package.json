@@ -1,11 +1,11 @@
 {
-  "name": "ClassroomExtender",
+  "name": "classroom-extender",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "tsc -p .",
-    "run-dev": "ts-node dist/server.js",
+    "run-dev": "ts-node dist/backend/configuration/server.js",
     "start-dev": "npm-run-all -l build run-dev"
   },
   "repository": {
