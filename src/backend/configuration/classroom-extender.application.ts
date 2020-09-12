@@ -3,13 +3,21 @@ import {Application} from 'express';
 
 import {ConfigurationConstants} from './configuration.constants';
 
+import {RootController} from '../controllers/root-controller';
+
 export class ClassroomExtenderApplication {
   private app: Application;
 
   public constructor() {
     this.app = express();
 
+    this.setControllers();
+
     this.setAppListening();
+  }
+
+  private setControllers() {
+    this.app.use('/', new RootController().getRouter());
   }
 
   private setAppListening(): void {
