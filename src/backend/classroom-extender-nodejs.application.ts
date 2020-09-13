@@ -1,10 +1,11 @@
-import * as express from 'express';
+import express from 'express';
 import {Application} from 'express';
 
 import {RootController} from './controllers/root-controller';
 
 import {Configuration} from './models/utils/configuration';
-import { Logger } from './utils/logger';
+import {Logger} from './utils/logger';
+
 const CONFIG: Configuration = require('./configuration/configuration.json');
 
 export class ClassroomExtenderNodeJSApplication {
