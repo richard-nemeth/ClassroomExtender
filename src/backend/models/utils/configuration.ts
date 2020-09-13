@@ -6,7 +6,7 @@ interface Logger {
   timeStampPattern: string;
   logDestination: string;
   datePattern: string;
-  maxFilesStore: string;
+  fileStoreDays: string;
 }
 
 export interface Configuration {

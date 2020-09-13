@@ -4,8 +4,8 @@
     },
     "logger": {
       "timeStampPattern": "YYYY-MM-DD HH:mm:ss",
-      "logDestination": "C:/Users/RichárdNémeth/ClassroomExtenderNodeJS/application-%DATE%.log",
+      "logDestination": "C:/Users/RichárdNémeth/ClassroomExtenderNodeJSLogs/application-%DATE%.log",
       "datePattern": "YYYY-MM-DD",
-      "maxFilesStore": "90d"
+      "fileStoreDays": "90d"
     }
  }
