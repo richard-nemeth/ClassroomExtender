@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-dev": "tsc -p .",
-    "run-dev": "ts-node dist/backend/server.js",
-    "start-dev": "npm-run-all -l build-dev run-dev"
+    "build": "tsc -p .",
+    "run": "ts-node dist/backend/server.js",
+    "start": "npm-run-all -l build run"
   },
   "repository": {
     "type": "git",
