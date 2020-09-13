@@ -3,10 +3,8 @@ node_js:
 - 12.16.1
 before_install:
   npm i -g npm@6.13.4
-before_script:
-  npm install
 script:
-  npm run start
+  npm run build
 deploy:
   provider: heroku
   app: me-classroom-extender-nodejs
