@@ -3,7 +3,7 @@
      "port": 3000
     },
     "logger": {
-      "timeStampFormat": "YYYY-MM-DD HH:mm:ss",
+      "timeStampPattern": "YYYY-MM-DD HH:mm:ss",
       "logDestination": "C:/Users/RichárdNémeth/ClassroomExtenderNodeJS/application-%DATE%.log",
       "datePattern": "YYYY-MM-DD",
       "maxFilesStore": "90d"

@@ -3,7 +3,7 @@ interface Server {
 }
 
 interface Logger {
-  timeStampFormat: string;
+  timeStampPattern: string;
   logDestination: string;
   datePattern: string;
   maxFilesStore: string;
