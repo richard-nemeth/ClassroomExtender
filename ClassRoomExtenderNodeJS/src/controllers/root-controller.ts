@@ -17,7 +17,7 @@ export class RootController {
 
   private initRootPath() {
     this.router.get('/', (request: Request, response: Response) => {
-      response.send('Hello World!');
+      response.json({msg: "Hello world!"});
     });
   }
 

@@ -1,5 +1,6 @@
 import express from 'express';
 import {Application} from 'express';
+import cors from 'cors';
 
 import {RootController} from './controllers/root-controller';
 
@@ -17,12 +18,22 @@ export class ClassroomExtenderNodeJSApplication {
   public constructor() {
     this.app = express();
 
+    this.setMiddleWares();
+
     this.setControllers();
 
     this.setAppListening();
   }
 
-  private setControllers() {
+  private setMiddleWares(): void {
+    this.setCrossOriginSupport();
+  }
+
+  private setCrossOriginSupport(): void {
+    this.app.use(cors());
+  }
+
+  private setControllers(): void {
     this.app.use('/', new RootController().getRouter());
   }
 
