@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p .",
-    "run": "ts-node dist/backend/server.js",
+    "run": "ts-node dist/server.js",
     "start": "npm-run-all -l build run"
   },
   "repository": {

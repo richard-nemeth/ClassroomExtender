@@ -8,7 +8,7 @@
       "esModuleInterop": true
   },
   "include": [
-    "src/backend/configuration/*.json",
+    "src/configuration/*.json",
     "src/**/*.ts"
  ],
   "exclude": [
