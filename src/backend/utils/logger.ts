@@ -3,7 +3,10 @@ import {createLogger, transports, format} from 'winston';
 export class Logger {
 
   private static readonly WINSTON_LOGGER = createLogger({
-    format: format.combine(format.simple()),
+    format: format.combine(
+      format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
+      format.prettyPrint()
+    ),
     transports: new transports.Console()
   });
 
