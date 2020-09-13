@@ -11,6 +11,10 @@ export class RootComponent {
   public rootBackendMessage: any;
 
   public constructor(private rootService: RootService) {
-    this.rootBackendMessage = rootService.getRootMessage();
+    this.setRootBackendMessage();
+  }
+
+  private async setRootBackendMessage() {
+    this.rootBackendMessage = await this.rootService.getRootMessage();
   }
 }

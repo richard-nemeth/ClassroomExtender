@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from '@angular/common/http';
-import {first} from 'rxjs/operators';
 
 import {PathConstants} from '../constants/PathConstants';
 
@@ -11,11 +10,11 @@ export class RootService {
 
   }
 
-  public getRootMessage(): any {
-    let responseMsg: any;
+  public async getRootMessage(): Promise<string> {
+    let responseMsg: string;
 
-    this.httpClient.get(PathConstants.ROOT_PATH).pipe(first()).subscribe(response => {
-      responseMsg = response;
+    await this.httpClient.get(PathConstants.ROOT_PATH).toPromise().then(response => {
+      responseMsg = JSON.stringify(response);
     });
 
     return responseMsg;
