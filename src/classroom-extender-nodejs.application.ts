@@ -12,6 +12,7 @@ const CONFIG: Configuration = require('./configuration/configuration.json');
 export class ClassroomExtenderNodeJSApplication {
   private static readonly TAG: string = 'ClassroomExtenderNodeJSApplication';
   private static readonly LISTENING_MESSAGE: string = 'ClassroomExtender is listening on http://localhost:' + CONFIG.server.port;
+  private static readonly ACTUAL_PORT: number = (Number.parseInt(process.env.PORT) || CONFIG.server.port);
 
   private app: Application;
 
@@ -38,7 +39,7 @@ export class ClassroomExtenderNodeJSApplication {
   }
 
   private setAppListening(): void {
-    this.app.listen(CONFIG.server.port, () => {
+    this.app.listen(ClassroomExtenderNodeJSApplication.ACTUAL_PORT, () => {
       Logger.infoLog({
         tag: ClassroomExtenderNodeJSApplication.TAG,
         message: ClassroomExtenderNodeJSApplication.LISTENING_MESSAGE 
