@@ -37,7 +37,7 @@ export class ClassroomExtenderNodeJSApplication {
 
   private getCorsOptions(): CorsOptions {
     return {
-      origin: 'https://me-classroom-extender-angular.herokuapp.com/',
+      origin: 'https://me-classroom-extender-angular.herokuapp.com',
       optionsSuccessStatus: 200
     }
   }
