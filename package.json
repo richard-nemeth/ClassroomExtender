@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/richard-nemeth/ClassroomExtender#readme",
   "dependencies": {
+    "@types/cors": "^2.8.7",
     "@types/express": "^4.17.8",
     "@types/node": "^14.10.1",
     "cors": "^2.8.5",
