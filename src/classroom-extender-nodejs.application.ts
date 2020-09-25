@@ -3,7 +3,7 @@ import {Application} from 'express';
 import cors, {CorsOptions} from 'cors';
 import {String} from 'typescript-string-operations';
 
-import {RootController} from './controllers/root-controller';
+import {AuthController} from './controllers/auth.controller';
 
 import {Configuration} from './models/utils/configuration';
 
@@ -44,7 +44,7 @@ export class ClassroomExtenderNodeJSApplication {
   }
 
   private setControllers(): void {
-    this.app.use(new RootController().getRouter());
+    this.app.use(new AuthController().getRouter());
   }
 
   private setAppListening(): void {
