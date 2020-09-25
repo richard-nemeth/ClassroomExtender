@@ -1,6 +1,7 @@
 import express from 'express';
 import {Application} from 'express';
-import cors, { CorsOptions } from 'cors';
+import cors, {CorsOptions} from 'cors';
+import {String} from 'typescript-string-operations';
 
 import {RootController} from './controllers/root-controller';
 
@@ -13,6 +14,7 @@ import {ApplicationConstants} from './utils/constants/application.constants';
 const CONFIG: Configuration = require('./configuration/configuration.json');
 
 export class ClassroomExtenderNodeJSApplication {
+  private static readonly ACTUAL_HOST: string = (process.env.HOST || CONFIG.server.host);
   private static readonly ACTUAL_PORT: number = (Number.parseInt(process.env.PORT) || CONFIG.server.port);
 
   private app: Application;
@@ -50,7 +52,11 @@ export class ClassroomExtenderNodeJSApplication {
     this.app.listen(ClassroomExtenderNodeJSApplication.ACTUAL_PORT, () => {
       Logger.infoLog({
         tag: ApplicationConstants.TAG,
-        message: ApplicationConstants.LISTENING_MESSAGE
+        message: String.Format(
+          ApplicationConstants.LISTENING_MESSAGE,
+          ClassroomExtenderNodeJSApplication.ACTUAL_HOST,
+          ClassroomExtenderNodeJSApplication.ACTUAL_PORT
+        )
       });
     });
   }
