@@ -8,7 +8,7 @@ import {Configuration} from './models/utils/configuration';
 
 import {Logger} from './utils/logger';
 
-import {Constants} from './utils/constants/constants';
+import {ApplicationConstants} from './utils/constants/application.constants';
 
 const CONFIG: Configuration = require('./configuration/configuration.json');
 
@@ -49,8 +49,8 @@ export class ClassroomExtenderNodeJSApplication {
   private setAppListening(): void {
     this.app.listen(ClassroomExtenderNodeJSApplication.ACTUAL_PORT, () => {
       Logger.infoLog({
-        tag: Constants.Application.TAG,
-        message: Constants.Application.LISTENING_MESSAGE
+        tag: ApplicationConstants.TAG,
+        message: ApplicationConstants.LISTENING_MESSAGE
       });
     });
   }
