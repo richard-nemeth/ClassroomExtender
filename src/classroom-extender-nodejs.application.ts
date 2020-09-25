@@ -14,7 +14,6 @@ import {ApplicationConstants} from './utils/constants/application.constants';
 const CONFIG: Configuration = require('./configuration/configuration.json');
 
 export class ClassroomExtenderNodeJSApplication {
-  private static readonly ACTUAL_HOST: string = (process.env.HOST || CONFIG.server.host);
   private static readonly ACTUAL_PORT: number = (Number.parseInt(process.env.PORT) || CONFIG.server.port);
 
   private app: Application;
@@ -54,7 +53,6 @@ export class ClassroomExtenderNodeJSApplication {
         tag: ApplicationConstants.TAG,
         message: String.Format(
           ApplicationConstants.LISTENING_MESSAGE,
-          ClassroomExtenderNodeJSApplication.ACTUAL_HOST,
           ClassroomExtenderNodeJSApplication.ACTUAL_PORT
         )
       });
