@@ -12,9 +12,11 @@ export class AuthController extends BaseController {
     this.initAuthPath();
   }
 
-  private initAuthPath() {
+  private initAuthPath(): void {
     this.router.get(RouteConstants.Auth.Authentication, (request: Request, response: Response) => {
-      response.json({msg: "Hello world!"});
+      setTimeout(() => {
+        response.json({msg: "Hello world!"});
+      }, 1000);
     });
   }
 }
