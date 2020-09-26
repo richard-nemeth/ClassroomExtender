@@ -2,7 +2,7 @@ interface Server {
   port: number;
 }
 
-interface Logger {
+export interface LoggerConfiguration {
   timeStampPattern: string;
   logDestination: string;
   datePattern: string;
@@ -11,6 +11,6 @@ interface Logger {
 
 export interface Configuration {
   server: Server;
-  logger: Logger;
+  logger: LoggerConfiguration;
   allowedOrigin: string;
 };
