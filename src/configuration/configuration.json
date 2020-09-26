@@ -7,5 +7,6 @@
       "logDestination": "C:/Users/RichárdNémeth/ClassroomExtenderNodeJSLogs/application-%DATE%.log",
       "datePattern": "YYYY-MM-DD",
       "fileStoreDays": "90d"
-    }
+    },
+    "allowedOrigin": "https://me-classroom-extender-angular.herokuapp.com"
  }

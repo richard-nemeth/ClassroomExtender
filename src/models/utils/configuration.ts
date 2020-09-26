@@ -12,4 +12,5 @@ interface Logger {
 export interface Configuration {
   server: Server;
   logger: Logger;
+  allowedOrigin: string;
 };

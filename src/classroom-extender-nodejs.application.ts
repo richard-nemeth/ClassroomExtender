@@ -10,6 +10,7 @@ import {Configuration} from './models/utils/configuration';
 import {Logger} from './utils/logger';
 
 import {ApplicationConstants} from './utils/constants/application.constants';
+import { config } from 'process';
 
 const CONFIG: Configuration = require('./configuration/configuration.json');
 
@@ -38,7 +39,7 @@ export class ClassroomExtenderNodeJSApplication {
 
   private getCorsOptions(): CorsOptions {
     return {
-      origin: 'https://me-classroom-extender-angular.herokuapp.com',
+      origin: CONFIG.allowedOrigin,
       optionsSuccessStatus: 200
     }
   }
