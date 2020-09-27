@@ -2,20 +2,17 @@ import express from 'express';
 import {Application} from 'express';
 import cors, {CorsOptions} from 'cors';
 import {String} from 'typescript-string-operations';
-import dotenv from 'dotenv';
 
 import {AuthController} from './controllers/auth.controller';
 
 import {ApplicationConstants} from './utils/constants/application.constants';
 
-import {Configuration} from './models/utils/configuration';
-import {ConfigLoader} from './utils/config-loader';
+import {ApplicationLogger} from './utils/logger/logger';
 
-import {ApplicationLogger} from './utils/logger';
+import {Configuration} from './utils/configuration/configuration'
 
 class ClassroomExtenderNodeJSApplication {
   private app: Application;
-  private configuration: Configuration;
   private actualPort: number;
 
   public constructor() {
@@ -25,32 +22,11 @@ class ClassroomExtenderNodeJSApplication {
   }
 
   private setApplicationConfiguration(): void {
-    this.loadEnvironmentVariables();
-    this.loadConfig();
     this.getActualPort();
-    this.setLogger();
-  }
-
-  private loadEnvironmentVariables(): void {
-    dotenv.config()
-  }
-
-  private loadConfig(): void {
-    try {
-      this.configuration = ConfigLoader.loadConfiguration();
-    } catch (error: any) {
-      console.log(ApplicationConstants.CONFIG_LOADING_FAILED + error);
-
-      process.exit(1);
-    }
   }
 
   private getActualPort(): void {
-    this.actualPort = (Number.parseInt(process.env.PORT) || this.configuration.server.port);
-  }
-
-  private setLogger(): void {
-    ApplicationLogger.configurateLogger(this.configuration.logger);
+    this.actualPort = (Number.parseInt(process.env.PORT) || Configuration.SERVER_CONFIG.port);
   }
 
   private setApplication(): void {
@@ -71,7 +47,7 @@ class ClassroomExtenderNodeJSApplication {
 
   private getCorsOptions(): CorsOptions {
     return {
-      origin: this.configuration.allowedOrigin,
+      origin: Configuration.CORS_CONFIG.allowedOrigin,
       optionsSuccessStatus: 200
     }
   }
