@@ -4,7 +4,7 @@ import {BaseController} from './base.controller';
 
 import {RouteConstants} from '../utils/constants/route.constants';
 
-import {GoogleOAuth2Util} from '../models/utils/GoogleOAuth2Util';
+import {AuthService} from '../services/auth.service';
 
 export class AuthController extends BaseController {
 
@@ -17,7 +17,13 @@ export class AuthController extends BaseController {
 
   private initAuthPath(): void {
     this.router.get(RouteConstants.Auth.AUTH, (request: Request, response: Response) => {
-      response.json(GoogleOAuth2Util.getGoogleAuthUrl());
+      AuthService.getGoogleAuthContent().then((authContent: string) => {
+        if(authContent) {
+          response.send(encodeURI(authContent)).status(200);
+        } else {
+          response.sendStatus(500);
+        }
+      });
     });
   }
 
