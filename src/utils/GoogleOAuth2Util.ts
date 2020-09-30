@@ -10,7 +10,6 @@ export class GoogleOAuth2Util {
   public static getGoogleAuthUrl(): string {
     let googleAuthClient = GoogleOAuth2Util.createGoogleAuthClient();
 
-    console.log(GoogleOAuth2Util.createAuthUrl(googleAuthClient));
     return GoogleOAuth2Util.createAuthUrl(googleAuthClient);
   }
 
