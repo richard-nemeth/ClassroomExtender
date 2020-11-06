@@ -13,7 +13,11 @@ export class Configuration {
   }
 
   public static readonly SERVER_CONFIG: Server = {
-    port: Number.parseInt(process.env.SERVER_PORT)
+    port: Number.parseInt(process.env.SERVER_PORT),
+    db: {
+      path: process.env.MONGODB_PATH,
+      name: process.env.MONGODB_NAME
+    }
   }
 
   public static readonly LOGGING_CONFIG: Logging = {

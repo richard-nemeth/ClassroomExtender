@@ -1,4 +1,6 @@
+import { MongoDb } from "./MongoDb";
+
 export interface Server {
   port: number;
-  mongoDBPath: string;
+  db: MongoDb;
 }

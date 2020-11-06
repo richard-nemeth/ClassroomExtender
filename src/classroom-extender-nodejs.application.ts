@@ -10,6 +10,7 @@ import {ApplicationConstants} from './utils/constants/application.constants';
 import {ApplicationLogger} from './utils/logger/logger';
 
 import {Configuration} from './utils/configuration/configuration'
+import { MongoDbConnectorUtil } from './utils/mongodb/MongoDbConnectorUtil';
 
 class ClassroomExtenderNodeJSApplication {
   private app: Application;
@@ -32,9 +33,15 @@ class ClassroomExtenderNodeJSApplication {
   private setApplication(): void {
     this.app = express();
 
+    this.setUpDatabase();
+
     this.setMiddleWares();
     this.setControllers();
     this.setAppListening();
+  }
+
+  private setUpDatabase(): void {
+    MongoDbConnectorUtil.connectToMongoDb();
   }
 
   private setMiddleWares(): void {
