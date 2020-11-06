@@ -5,14 +5,15 @@ import {String} from 'typescript-string-operations';
 
 import {AuthController} from './controllers/AuthController';
 
-import {ApplicationConstants} from './utils/constants/ApplicationConstants';
-
 import {ApplicationLogger} from './utils/logger/Logger';
 
 import {Configuration} from './utils/configuration/Configuration'
-import { MongoDbConnectorUtil } from './utils/mongodb/MongoDbConnectorUtil';
+import {MongoDbConnectorUtil} from './utils/mongodb/MongoDbConnectorUtil';
 
 class ClassroomExtenderNodeJSApplication {
+
+  private static readonly TAG: string = 'ClassroomExtenderNodeJSApplication';
+
   private app: Application;
   private actualPort: number;
 
@@ -66,8 +67,8 @@ class ClassroomExtenderNodeJSApplication {
   private setAppListening(): void {
     this.app.listen(this.actualPort, () => {
       ApplicationLogger.infoLog({
-        tag: ApplicationConstants.TAG,
-        message: String.Format(ApplicationConstants.LISTENING_MESSAGE, this.actualPort)
+        tag: ClassroomExtenderNodeJSApplication.TAG,
+        message: String.Format('ClassroomExtender is listening on http://localhost:' + '{0}', this.actualPort)
       });
     });
   }
