@@ -4,12 +4,16 @@ import {BaseController} from './base.controller';
 
 import {RouteConstants} from '../utils/constants/route.constants';
 
-import {GoogleOAuth2Util} from '../utils/GoogleOAuth2Util';
+import {GoogleOAuth2Service} from '../services/GoogleOAuth2Service';
 
 export class AuthController extends BaseController {
 
+  private googleOAuth2Service: GoogleOAuth2Service;
+
   public constructor() {
     super();
+
+    this.googleOAuth2Service = new GoogleOAuth2Service();
 
     this.initAuthPath();
     this.initAuthRedirectPath();
@@ -17,7 +21,7 @@ export class AuthController extends BaseController {
 
   private initAuthPath(): void {
     this.router.get(RouteConstants.Auth.AUTH, (request: Request, response: Response) => {
-      response.send(encodeURI(GoogleOAuth2Util.getGoogleAuthUrl())).status(200);
+      response.send(encodeURI(this.googleOAuth2Service.getGoogleAuthUrl())).status(200);
     });
   }
 
