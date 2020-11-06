@@ -1,6 +1,6 @@
 import MongoClient from 'mongodb';
 
-import {Configuration} from '../configuration/configuration';
+import {Configuration} from '../configuration/Configuration';
 
 export class MongoDbConnectorUtil {
 

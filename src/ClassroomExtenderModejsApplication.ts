@@ -3,13 +3,13 @@ import {Application} from 'express';
 import cors, {CorsOptions} from 'cors';
 import {String} from 'typescript-string-operations';
 
-import {AuthController} from './controllers/auth.controller';
+import {AuthController} from './controllers/AuthController';
 
-import {ApplicationConstants} from './utils/constants/application.constants';
+import {ApplicationConstants} from './utils/constants/ApplicationConstants';
 
-import {ApplicationLogger} from './utils/logger/logger';
+import {ApplicationLogger} from './utils/logger/Logger';
 
-import {Configuration} from './utils/configuration/configuration'
+import {Configuration} from './utils/configuration/Configuration'
 import { MongoDbConnectorUtil } from './utils/mongodb/MongoDbConnectorUtil';
 
 class ClassroomExtenderNodeJSApplication {

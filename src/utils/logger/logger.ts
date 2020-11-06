@@ -2,9 +2,9 @@ import {String} from 'typescript-string-operations';
 import {createLogger, transports, format, Logger} from 'winston';
 import DailyRotateFile from "winston-daily-rotate-file";
 
-import {LogMessage} from '../../models/utils/logmessage';
+import {LogMessage} from '../../models/utils/LogMessage';
 
-import {Configuration} from '../configuration/configuration';
+import {Configuration} from '../configuration/Configuration';
 
 export class ApplicationLogger {
 

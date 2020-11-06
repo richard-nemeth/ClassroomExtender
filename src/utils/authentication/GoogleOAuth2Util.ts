@@ -1,6 +1,6 @@
 import {google} from 'googleapis';
 
-import {Configuration} from '../configuration/configuration';
+import {Configuration} from '../configuration/Configuration';
 
 export class GoogleOAuth2Util {
 

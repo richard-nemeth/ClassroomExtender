@@ -1,4 +1,4 @@
-export class AuthServiceConstants {
+export class AuthUtilConstants {
 
   private constructor() {
   }

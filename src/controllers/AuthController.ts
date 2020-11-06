@@ -1,8 +1,8 @@
 import {Request, Response} from 'express';
 
-import {BaseController} from './base.controller';
+import {BaseController} from './BaseController';
 
-import {RouteConstants} from '../utils/constants/route.constants';
+import {RouteConstants} from '../utils/constants/RouteConstants';
 
 import {GoogleOAuth2Util} from '../utils/authentication/GoogleOAuth2Util';
 
