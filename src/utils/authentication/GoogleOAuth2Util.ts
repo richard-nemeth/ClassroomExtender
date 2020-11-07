@@ -1,16 +1,25 @@
 import {google} from 'googleapis';
-
 import {Configuration} from '../configuration/Configuration';
 
 export class GoogleOAuth2Util {
 
+  private static readonly AUTH_CLIENT = GoogleOAuth2Util.createGoogleAuthClient();
   private constructor() {
   }
 
-  public static getGoogleAuthUrl(): string {
-    let googleAuthClient = this.createGoogleAuthClient();
+  public static createAuthUrl(): string {
+    return GoogleOAuth2Util.AUTH_CLIENT.generateAuthUrl({
+      access_type: 'offline',
+      scope: Configuration.GOOGLE_CLASSROOM_SCOPES
+    });
+  }
 
-    return this.createAuthUrl(googleAuthClient);
+  public static async doAuthenticateRegisteredUser(code: string): Promise<string> {
+    const {tokens} = await GoogleOAuth2Util.AUTH_CLIENT.getToken(code);
+
+    GoogleOAuth2Util.AUTH_CLIENT.setCredentials(tokens);
+
+    return tokens.refresh_token;
   }
 
   private static createGoogleAuthClient() {
@@ -21,10 +30,4 @@ export class GoogleOAuth2Util {
     );
   }
 
-  private static createAuthUrl(googleAuthClient): string {
-    return googleAuthClient.generateAuthUrl({
-      access_type: 'offline',
-      scope: Configuration.GOOGLE_CLASSROOM_SCOPES
-    });
-  }
 }
