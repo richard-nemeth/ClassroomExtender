@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p .",
-    "run": "ts-node dist/classroom-extender-nodejs.application.js",
+    "run": "ts-node dist/ClassroomExtenderNodejsApplication.js",
     "start": "npm-run-all -l build run"
   },
   "repository": {
