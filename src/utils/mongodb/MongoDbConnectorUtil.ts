@@ -1,5 +1,7 @@
 import MongoClient from 'mongodb';
 
+import {User} from '../../models/data/User';
+
 import {Configuration} from '../configuration/Configuration';
 import {ApplicationLogger} from '../logger/Logger';
 
@@ -7,7 +9,7 @@ export class MongoDbConnectorUtil {
 
   private static readonly TAG: string = 'MongoDbConnectorUtil';
 
-  public static DB: MongoClient.Db;
+  private static DB: MongoClient.Db;
 
   private constructor() {
   }
@@ -29,6 +31,10 @@ export class MongoDbConnectorUtil {
 
      process.exit();
     });
+  }
+
+  public static getUsersCollection(): MongoClient.Collection<User> {
+    return MongoDbConnectorUtil.DB.collection<User>('Users');
   }
 
   private static getOptionsForMongoClient() {
