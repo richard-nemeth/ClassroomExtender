@@ -16,17 +16,17 @@ export class RegistrationController extends BaseController {
     super();
 
     this.initGetGoogleAuthenticationPath();
-    this.initRegistrationPath();
+    this.initPersistRegistrationPath();
   }
 
   private initGetGoogleAuthenticationPath(): void {
-    this.router.get(RouteConstants.Auth.AUTH, (request: Request, response: Response) => {
+    this.router.get(RouteConstants.Auth.START_REGISTRATION, (request: Request, response: Response) => {
       response.send(encodeURI(GoogleOAuth2Util.createAuthUrl())).status(200);
     });
   }
 
-  private initRegistrationPath(): void {
-    this.router.post(RouteConstants.Auth.REGISTRATION, (request: Request, response: Response) => {
+  private initPersistRegistrationPath(): void {
+    this.router.post(RouteConstants.Auth.PERSIST_REGISTRATION, (request: Request, response: Response) => {
       const registration: RegistrationRequest = request.body;
 
       if (!String.IsNullOrWhiteSpace(registration.registrationCode)) {
