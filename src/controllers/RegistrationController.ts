@@ -10,16 +10,16 @@ import {GoogleOAuth2Util} from '../utils/authentication/GoogleOAuth2Util';
 import {RegistrationRequest} from '../models/authentication/RegistrationRequest';
 import {RegistrationUtil} from '../utils/authentication/RegistrationUtil';
 
-export class AuthController extends BaseController {
+export class RegistrationController extends BaseController {
 
   public constructor() {
     super();
 
-    this.initGetAuthenticationPath();
+    this.initGetGoogleAuthenticationPath();
     this.initRegistrationPath();
   }
 
-  private initGetAuthenticationPath(): void {
+  private initGetGoogleAuthenticationPath(): void {
     this.router.get(RouteConstants.Auth.AUTH, (request: Request, response: Response) => {
       response.send(encodeURI(GoogleOAuth2Util.createAuthUrl())).status(200);
     });
