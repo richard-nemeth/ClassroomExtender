@@ -4,6 +4,7 @@ import {Configuration} from '../configuration/Configuration';
 export class GoogleOAuth2Util {
 
   private static readonly AUTH_CLIENT = GoogleOAuth2Util.createGoogleAuthClient();
+
   private constructor() {
   }
 
