@@ -27,13 +27,16 @@ export class RegistrationController extends BaseController {
 
   private initPersistRegistrationPath(): void {
     this.router.post(RouteConstants.Auth.PERSIST_REGISTRATION, (request: Request, response: Response) => {
-      const registration: RegistrationRequest = request.body;
+      /*const registration: RegistrationRequest = request.body;
 
       if (!String.IsNullOrWhiteSpace(registration.registrationCode)) {
        this.processRegistration(registration, response);
       } else {
         response.sendStatus(401);
-      }
+      }*/
+      console.log(request.headers);
+      console.log(request.body);
+      console.log(request.params);
     });
   }
 

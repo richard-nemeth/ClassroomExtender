@@ -2,6 +2,7 @@ import express from 'express';
 import {Application} from 'express';
 import cors, {CorsOptions} from 'cors';
 import {String} from 'typescript-string-operations';
+import bodyParser from 'body-parser';
 
 import {RegistrationController} from './controllers/RegistrationController';
 
@@ -47,10 +48,15 @@ class ClassroomExtenderNodeJSApplication {
 
   private setMiddleWares(): void {
     this.setCrossOriginSupport();
+    this.setBodyParser();
   }
 
   private setCrossOriginSupport(): void {
     this.app.use(cors(this.getCorsOptions()));
+  }
+
+  private setBodyParser(): void {
+    this.app.use(bodyParser.json())
   }
 
   private getCorsOptions(): CorsOptions {
