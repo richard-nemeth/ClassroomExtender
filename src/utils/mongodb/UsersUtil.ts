@@ -23,7 +23,7 @@ export class UsersUtil {
       }).catch((error: any) => {
         ApplicationLogger.errorLog({
           tag: UsersUtil.TAG,
-          message: "Could not persist error: " + error
+          message: "Could not persist user, error: " + error
          });
 
          return null;
