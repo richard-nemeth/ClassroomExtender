@@ -10,7 +10,11 @@ import {GoogleOAuth2Util} from '../utils/authentication/GoogleOAuth2Util';
 import {RegistrationRequest} from '../models/authentication/RegistrationRequest';
 import {RegistrationUtil} from '../utils/authentication/RegistrationUtil';
 
+import {ApplicationLogger} from '../utils/logger/Logger';
+
 export class RegistrationController extends BaseController {
+
+  private static readonly TAG: string = 'RegistrationController';
 
   public constructor() {
     super();
@@ -32,6 +36,11 @@ export class RegistrationController extends BaseController {
       if (!String.IsNullOrWhiteSpace(registration.registrationCode)) {
        this.processRegistration(registration, response);
       } else {
+        ApplicationLogger.errorLog({
+          tag: RegistrationController.TAG,
+          message: 'Invalid registrationCode received!'
+        });
+
         response.sendStatus(401);
       }
     });
@@ -42,6 +51,11 @@ export class RegistrationController extends BaseController {
       if (!String.IsNullOrWhiteSpace(userId)) {
         response.send(encodeURI(userId)).status(200);
       } else {
+        ApplicationLogger.errorLog({
+          tag: RegistrationController.TAG,
+          message: 'Could not return userId!'
+        });
+
         response.sendStatus(401);
       }
     });
