@@ -5,6 +5,7 @@ import {String} from 'typescript-string-operations';
 import bodyParser from 'body-parser';
 
 import {RegistrationController} from './controllers/RegistrationController';
+import {CourseController} from './controllers/CourseController';
 
 import {ApplicationLogger} from './utils/logger/Logger';
 
@@ -68,6 +69,7 @@ class ClassroomExtenderNodeJSApplication {
 
   private setControllers(): void {
     this.app.use(new RegistrationController().getRouter());
+    this.app.use(new CourseController().getRouter());
   }
 
   private setAppListening(): void {
