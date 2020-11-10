@@ -31,8 +31,19 @@ export class UsersUtil {
   }
 
   public static async isUserExists(userId: string): Promise<boolean> {
-    const foundUser: User = await MongoDbConnectorUtil.getUsersCollection().findOne(new ObjectId(userId));
+    const foundUser: User = await this.getUserById(userId);
 
     return foundUser !== null;
+  }
+
+
+  public static async getRefreshTokenForUser(userId: string): Promise<string> {
+    const foundUser: User = await this.getUserById(userId);
+
+    return foundUser.refresh_key;
+  }
+
+  private static getUserById(userId: string): Promise<User> {
+    return MongoDbConnectorUtil.getUsersCollection().findOne(new ObjectId(userId));
   }
 }

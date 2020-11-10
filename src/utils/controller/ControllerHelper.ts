@@ -18,7 +18,12 @@ export class ControllerHelper {
     } else {
       return null;
     }
-  
+  }
+
+  public static async getUserRefreshTokenFromRequest(request: Request): Promise<string> {
+    const userId: string = this.getAuthHeaderFromRequest(request)[1];
+
+    return UsersUtil.getRefreshTokenForUser(userId);
   }
 
   public static isAuthHeaderContentValid(request: Request): boolean {
