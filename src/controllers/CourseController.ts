@@ -15,9 +15,12 @@ export class CourseController extends BaseController {
   private initGetAllCourses(): void {
     this.router.get(RouteConstants.Courses.GET_ALL_COURSES, (request: Request, response: Response) => {
       const authHeader: string[] = BaseController.getAuthHeaderFromRequest(request);
-      BaseController.validateAuthHeader(authHeader, response);
 
-      console.log('AAA');
+      if (BaseController.isAuthHeaderContentValid(authHeader)) {
+
+      } else {
+        response.sendStatus(403);
+      }
     });
   }
 }

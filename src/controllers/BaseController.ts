@@ -20,13 +20,7 @@ export class BaseController {
     return request.headers.authorization.split(' ');
   }
 
-  protected static validateAuthHeader(authHeader: string[], response: Response) {
-    if (!this.isAuthHeaderContentValid(authHeader)) {
-      response.sendStatus(403);
-    }
-  }
-
-  private static isAuthHeaderContentValid(authHeaderContent: string[]): boolean {
+  protected static isAuthHeaderContentValid(authHeaderContent: string[]): boolean {
     return authHeaderContent.length === 2
       && this.AUTH_HEADER_TYPE === authHeaderContent[0]
       && !String.IsNullOrWhiteSpace(authHeaderContent[1]);
