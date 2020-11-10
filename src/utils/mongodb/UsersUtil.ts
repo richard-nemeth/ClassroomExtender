@@ -1,4 +1,4 @@
-import {InsertOneWriteOpResult, WithId} from 'mongodb';
+import {InsertOneWriteOpResult, ObjectId, WithId} from 'mongodb';
 
 import {MongoDbConnectorUtil} from './MongoDbConnectorUtil';
 
@@ -28,5 +28,11 @@ export class UsersUtil {
 
          return null;
       });
+  }
+
+  public static async isUserExists(userId: string): Promise<boolean> {
+    const foundUser: User = await MongoDbConnectorUtil.getUsersCollection().findOne(new ObjectId(userId));
+
+    return foundUser !== null;
   }
 }

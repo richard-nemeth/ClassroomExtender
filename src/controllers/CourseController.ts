@@ -3,6 +3,7 @@ import {Request, Response} from 'express';
 import {BaseController} from './BaseController';
 
 import {RouteConstants} from '../utils/constants/RouteConstants';
+import { UsersUtil } from '../utils/mongodb/UsersUtil';
 
 export class CourseController extends BaseController {
 
@@ -13,14 +14,10 @@ export class CourseController extends BaseController {
   }
 
   private initGetAllCourses(): void {
-    this.router.get(RouteConstants.Courses.GET_ALL_COURSES, (request: Request, response: Response) => {
-      const authHeader: string[] = BaseController.getAuthHeaderFromRequest(request);
+    this.router.get(RouteConstants.Courses.GET_ALL_COURSES, async (request: Request, response: Response) => {
+      console.log('ideért');
 
-      if (BaseController.isAuthHeaderContentValid(authHeader)) {
-
-      } else {
-        response.sendStatus(403);
-      }
+      response.sendStatus(500);
     });
   }
 }

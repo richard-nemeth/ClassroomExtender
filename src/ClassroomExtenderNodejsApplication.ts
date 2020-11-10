@@ -4,6 +4,8 @@ import cors, {CorsOptions} from 'cors';
 import {String} from 'typescript-string-operations';
 import bodyParser from 'body-parser';
 
+import {AUTH_INTERCEPTOR} from './interceptors/AuthInterceptor';
+
 import {RegistrationController} from './controllers/RegistrationController';
 import {CourseController} from './controllers/CourseController';
 
@@ -50,6 +52,7 @@ class ClassroomExtenderNodeJSApplication {
   private setMiddleWares(): void {
     this.setCrossOriginSupport();
     this.setBodyParser();
+    this.setInterceptors();
   }
 
   private setCrossOriginSupport(): void {
@@ -58,6 +61,10 @@ class ClassroomExtenderNodeJSApplication {
 
   private setBodyParser(): void {
     this.app.use(bodyParser.json())
+  }
+
+  private setInterceptors(): void {
+    this.app.use(AUTH_INTERCEPTOR);
   }
 
   private getCorsOptions(): CorsOptions {
