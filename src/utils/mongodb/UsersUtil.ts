@@ -13,11 +13,11 @@ export class UsersUtil {
   private constructor() {
   }
 
-  public static async addNewUser(refreshKey: string): Promise<string> {
+  public static async addNewUser(refreshToken: string): Promise<string> {
     return MongoDbConnectorUtil.getUsersCollection().insertOne(
       {
         _id: null,
-        refresh_key: refreshKey
+        refresh_token: refreshToken
       }).then((result: InsertOneWriteOpResult<WithId<User>>) => {
         return result.ops[0]._id;
       }).catch((error: any) => {
@@ -40,7 +40,7 @@ export class UsersUtil {
   public static async getRefreshTokenForUser(userId: string): Promise<string> {
     const foundUser: User = await this.getUserById(userId);
 
-    return foundUser.refresh_key;
+    return foundUser.refresh_token;
   }
 
   private static getUserById(userId: string): Promise<User> {
