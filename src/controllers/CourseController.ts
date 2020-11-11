@@ -3,7 +3,10 @@ import {Request, Response} from 'express';
 import {BaseController} from './BaseController';
 
 import {RouteConstants} from '../utils/constants/RouteConstants';
-import { UsersUtil } from '../utils/mongodb/UsersUtil';
+
+import {ControllerHelper} from '../utils/controller/ControllerHelper';
+
+import {CoursesUtil} from '../utils/courses/CoursesUtil';
 
 export class CourseController extends BaseController {
 
@@ -15,9 +18,11 @@ export class CourseController extends BaseController {
 
   private initGetAllCourses(): void {
     this.router.get(RouteConstants.Courses.GET_ALL_COURSES, async (request: Request, response: Response) => {
-      console.log('ideért');
+      const refreshToken: string = await ControllerHelper.getUserRefreshTokenFromRequest(request);
 
-      response.sendStatus(500);
+      console.log(CoursesUtil.getAllCourses(refreshToken));
+
+      response.sendStatus(200);
     });
   }
 }

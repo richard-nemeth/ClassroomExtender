@@ -23,6 +23,12 @@ export class GoogleOAuth2Util {
     return tokens.refresh_token;
   }
 
+  public static getActualAuthClient(refreshToken: string) {
+    this.AUTH_CLIENT.setCredentials({refresh_token: refreshToken});
+
+    return this.AUTH_CLIENT;
+  }
+
   private static createGoogleAuthClient() {
     return new google.auth.OAuth2(
       Configuration.GOOGLE_OAUTH_CONFIG.clientId,
