@@ -27,17 +27,10 @@ export class CoursesUtil {
   }
 
   private static getMyTeacherCourseListParams(pageToken: string) {
-    if (pageToken) {
-      return {
-        teacherId: "me",
-        courseStates: ['ACTIVE'],
-        pageToken: pageToken
-      }
-    }
-
     return {
       teacherId: "me",
       courseStates: ['ACTIVE'],
+      pageToken: pageToken
     }
   }
 
