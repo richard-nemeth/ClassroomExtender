@@ -8,6 +8,6 @@ export class RouteConstants {
   }
 
   public static readonly Courses = class {
-    public static readonly GET_ALL_COURSES = '/getAllCourses';
+    public static readonly GET_MY_TEACHER_COURSES = '/getMyTeacherCourses';
   }
 }

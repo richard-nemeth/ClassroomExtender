@@ -17,24 +17,35 @@ export class CourseController extends BaseController {
   public constructor() {
     super();
 
-    this.initGetAllCourses();
+    this.initGetMyTeacherCourses();
   }
 
-  private initGetAllCourses(): void {
-    this.router.get(RouteConstants.Courses.GET_ALL_COURSES, async (request: Request, response: Response) => {
+  private initGetMyTeacherCourses(): void {
+    this.router.get(RouteConstants.Courses.GET_MY_TEACHER_COURSES, async (request: Request, response: Response) => {
       const refreshToken: string = await ControllerHelper.getUserRefreshTokenFromRequest(request);
+      const pageToken: string = CourseController.getPageTokenFromRequest(request);
 
-      await CoursesUtil.getAllCourses(refreshToken)
-        .then((courses) => {
-          response.json(courses);
-        }).catch(error => {
-          ApplicationLogger.errorLog({
-            tag: CourseController.TAG,
-            message: 'Error occured while loading courses: ' + error
-          });
-
-          response.sendStatus(500);
+      await CoursesUtil.getMyTeacherCourses(refreshToken, pageToken)
+      .then((courses) => {
+        response.json(courses);
+      }).catch(error => {
+        ApplicationLogger.errorLog({
+          tag: CourseController.TAG,
+          message: 'Error occured while loading my teacher courses: ' + error
         });
+
+        response.sendStatus(500);
+      });
     });
+  }
+
+  private static getPageTokenFromRequest(request: Request): string {
+    const pageToken = request.query.pageToken;
+
+    if (pageToken) {
+      return pageToken.toString();
+    }
+
+    return null;
   }
 }
