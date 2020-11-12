@@ -1,6 +1,9 @@
+import {GaxiosResponse} from 'gaxios';
 import {google, classroom_v1} from 'googleapis';
 
 import {GoogleOAuth2Util} from "../authentication/GoogleOAuth2Util";
+
+import {CoursesResponse} from '../../models/data/CoursesResponse';
 
 export class CoursesUtil {
 
@@ -8,10 +11,13 @@ export class CoursesUtil {
   }
 
 
-  public static async getMyTeacherCourses(refreshToken: string, pageToken: string): Promise<classroom_v1.Schema$Course[]> {
+  public static async getMyTeacherCourses(refreshToken: string, pageToken: string): Promise<CoursesResponse> {
     const classroomApi = this.getClassroomApi(refreshToken);
 
-    return (await classroomApi.courses.list(this.getMyTeacherCourseListParams(pageToken))).data.courses;
+    const response: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse> =
+      await classroomApi.courses.list(this.getMyTeacherCourseListParams(pageToken));
+
+    return this.createCoursesResponseFromGaxiosResponse(response);
   }
 
   private static getClassroomApi(refreshToken: string) {
@@ -32,6 +38,13 @@ export class CoursesUtil {
     return {
       teacherId: "me",
       courseStates: ['ACTIVE'],
+    }
+  }
+
+  private static createCoursesResponseFromGaxiosResponse(response: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>): CoursesResponse {
+    return {
+      courses: response.data.courses,
+      nextPageToken: response.data.nextPageToken
     }
   }
 }

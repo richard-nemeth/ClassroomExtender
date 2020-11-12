@@ -10,6 +10,8 @@ import {CoursesUtil} from '../utils/courses/CoursesUtil';
 
 import {ApplicationLogger} from '../utils/logger/Logger';
 
+import {CoursesResponse} from '../models/data/CoursesResponse';
+
 export class CourseController extends BaseController {
 
   private static readonly TAG: string = 'CourseController';
@@ -26,8 +28,8 @@ export class CourseController extends BaseController {
       const pageToken: string = CourseController.getPageTokenFromRequest(request);
 
       await CoursesUtil.getMyTeacherCourses(refreshToken, pageToken)
-      .then((courses) => {
-        response.json(courses);
+      .then((courseResponse: CoursesResponse) => {
+        response.json(courseResponse);
       }).catch(error => {
         ApplicationLogger.errorLog({
           tag: CourseController.TAG,
