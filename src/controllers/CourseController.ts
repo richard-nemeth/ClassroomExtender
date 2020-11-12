@@ -20,7 +20,7 @@ export class CourseController extends BaseController {
     this.router.get(RouteConstants.Courses.GET_ALL_COURSES, async (request: Request, response: Response) => {
       const refreshToken: string = await ControllerHelper.getUserRefreshTokenFromRequest(request);
 
-      console.log(CoursesUtil.getAllCourses(refreshToken));
+      console.log(await CoursesUtil.getAllCourses(refreshToken));
 
       response.sendStatus(200);
     });

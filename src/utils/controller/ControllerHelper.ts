@@ -23,7 +23,7 @@ export class ControllerHelper {
   public static async getUserRefreshTokenFromRequest(request: Request): Promise<string> {
     const userId: string = this.getAuthHeaderFromRequest(request)[1];
 
-    return UsersUtil.getRefreshTokenForUser(userId);
+    return await UsersUtil.getRefreshTokenForUser(userId);
   }
 
   public static async isAuthHeaderContentValid(request: Request): Promise<boolean> {
