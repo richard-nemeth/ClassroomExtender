@@ -6,9 +6,9 @@ import {ApplicationLogger} from "../utils/logger/Logger";
 
 const TAG: string = "AuthInterceptor";
 
-export const AUTH_INTERCEPTOR = (request: Request, response: Response, next: NextFunction) => {
+export const AUTH_INTERCEPTOR = async (request: Request, response: Response, next: NextFunction) => {
   if (ControllerHelper.isRequestShouldBeAuthenticated(request)) {
-    if (ControllerHelper.isAuthHeaderContentValid(request)) {
+    if (await ControllerHelper.isAuthHeaderContentValid(request) === true) {
       next();
     } else {
       ApplicationLogger.errorLog({

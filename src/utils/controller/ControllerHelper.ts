@@ -26,14 +26,19 @@ export class ControllerHelper {
     return UsersUtil.getRefreshTokenForUser(userId);
   }
 
-  public static isAuthHeaderContentValid(request: Request): boolean {
+  public static async isAuthHeaderContentValid(request: Request): Promise<boolean> {
     const authHeaderContent: string[] = this.getAuthHeaderFromRequest(request);
 
-    return authHeaderContent
+    const isAuthHeaderValid: boolean = authHeaderContent
       && authHeaderContent.length === 2
       && this.AUTH_HEADER_TYPE === authHeaderContent[0]
       && !String.IsNullOrWhiteSpace(authHeaderContent[1])
-      && UsersUtil.isUserExists[authHeaderContent[1]];
+
+    if (isAuthHeaderValid) {
+      return UsersUtil.isUserExists(authHeaderContent[1]);
+    }
+
+    return false;
   }
 
   public static isRequestShouldBeAuthenticated(request: Request): boolean {
