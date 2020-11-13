@@ -1,4 +1,4 @@
-import {Collection, InsertOneWriteOpResult, ObjectId, WithId} from 'mongodb';
+import {InsertOneWriteOpResult, ObjectId, WithId} from 'mongodb';
 
 import {MongoDbConnectorUtil} from './MongoDbConnectorUtil';
 
@@ -39,21 +39,11 @@ export class UsersUtil {
 
 
   public static async getRefreshTokenForUser(userId: string): Promise<string> {
-    const foundUser: User = await this.getUserById(userId);
-
-    return foundUser.refresh_token;
+    return (await this.getUserById(userId)).refresh_token;
   }
 
   public static async getUserIdByEmail(email: string): Promise<string> {
     return (await MongoDbConnectorUtil.getUsersCollection().findOne({email: email}))._id;
-  }
-
-  public static updateUserRefreshToken(userId: string, refreshToken: string): void {
-    MongoDbConnectorUtil.getUsersCollection()
-      .updateOne(
-        { "_id": userId },
-        { $set: { refresh_token: refreshToken } }
-      );
   }
 
   private static getUserById(userId: string): Promise<User> {
