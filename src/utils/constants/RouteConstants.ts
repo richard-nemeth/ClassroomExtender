@@ -4,7 +4,7 @@ export class RouteConstants {
 
   public static readonly Auth = class {
     public static readonly START_AUTHENTICATION = '/start_authentication';
-    public static readonly PERSIST_REGISTRATION = '/persist_registration';
+    public static readonly PERSIST_AUTHENTICATION = '/persist_authentication';
   }
 
   public static readonly Courses = class {

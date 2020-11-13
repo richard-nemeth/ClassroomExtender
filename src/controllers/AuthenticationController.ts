@@ -7,8 +7,8 @@ import {RouteConstants} from '../utils/constants/RouteConstants';
 
 import {GoogleOAuth2Util} from '../utils/authentication/GoogleOAuth2Util';
 
-import {RegistrationRequest} from '../models/authentication/RegistrationRequest';
-import {RegistrationUtil} from '../utils/authentication/RegistrationUtil';
+import {AuthenticationRequest} from '../models/authentication/RegistrationRequest';
+import {AuthenticationUtil} from '../utils/authentication/AuthenticationUtil';
 
 import {ApplicationLogger} from '../utils/logger/Logger';
 
@@ -20,7 +20,7 @@ export class AuthenticationController extends BaseController {
     super();
 
     this.initGetGoogleAuthenticationPath();
-    this.initPersistRegistrationPath();
+    this.initPersistAuthenticationPath();
   }
 
   private initGetGoogleAuthenticationPath(): void {
@@ -29,16 +29,16 @@ export class AuthenticationController extends BaseController {
     });
   }
 
-  private initPersistRegistrationPath(): void {
-    this.router.post(RouteConstants.Auth.PERSIST_REGISTRATION, (request: Request, response: Response) => {
-      const registration: RegistrationRequest = request.body;
+  private initPersistAuthenticationPath(): void {
+    this.router.post(RouteConstants.Auth.PERSIST_AUTHENTICATION, (request: Request, response: Response) => {
+      const authentication: AuthenticationRequest = request.body;
 
-      if (!String.IsNullOrWhiteSpace(registration.registrationCode)) {
-       this.processRegistration(registration, response);
+      if (!String.IsNullOrWhiteSpace(authentication.code)) {
+       this.processAuthentication(authentication, response);
       } else {
         ApplicationLogger.errorLog({
           tag: AuthenticationController.TAG,
-          message: 'Invalid registrationCode received!'
+          message: 'Invalid code received!'
         });
 
         response.sendStatus(401);
@@ -46,8 +46,8 @@ export class AuthenticationController extends BaseController {
     });
   }
 
-  private processRegistration(registration: RegistrationRequest, response: Response): void {
-    RegistrationUtil.doRegistration(registration.registrationCode).then((userId: string) => {
+  private processAuthentication(authentication: AuthenticationRequest, response: Response): void {
+    AuthenticationUtil.persistAuthentication(authentication.code).then((userId: string) => {
       if (!String.IsNullOrWhiteSpace(userId)) {
         response.send(encodeURI(userId)).status(200);
       } else {

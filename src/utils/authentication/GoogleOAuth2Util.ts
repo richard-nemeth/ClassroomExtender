@@ -15,11 +15,9 @@ export class GoogleOAuth2Util {
 
   }
 
-  public static async doAuthenticateRegisteredUser(code: string): Promise<string> {
+  public static async doAuthenticateUserUser(code: string): Promise<string> {
     const authClient = this.createGoogleAuthClient();
     const {tokens} = await authClient.getToken(code);
-
-    authClient.setCredentials(tokens);
 
     return tokens.refresh_token;
   }

@@ -44,7 +44,7 @@ export class ControllerHelper {
   public static isRequestShouldBeAuthenticated(request: Request): boolean {
     const requestPath: string = request.path;
 
-    return RouteConstants.Auth.PERSIST_REGISTRATION !== requestPath
+    return RouteConstants.Auth.PERSIST_AUTHENTICATION !== requestPath
     && RouteConstants.Auth.START_AUTHENTICATION !== requestPath;
   }
 }

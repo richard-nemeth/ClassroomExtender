@@ -1,3 +1,3 @@
-export interface RegistrationRequest {
-  registrationCode: string;
+export interface AuthenticationRequest {
+  code: string;
 }
