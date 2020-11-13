@@ -15,11 +15,11 @@ export class GoogleOAuth2Util {
 
   }
 
-  public static async doAuthenticateUserUser(code: string): Promise<string> {
+  public static async doAuthenticateUserUser(code: string): Promise<any> {
     const authClient = this.createGoogleAuthClient();
     const {tokens} = await authClient.getToken(code);
 
-    return tokens.refresh_token;
+    return tokens;
   }
 
   public static getActualAuthClient(refreshToken: string) {

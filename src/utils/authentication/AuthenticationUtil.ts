@@ -10,17 +10,24 @@ export class AuthenticationUtil {
   }
 
   public static async persistAuthentication(code: string): Promise<string> {
-    const refreshToken: string = await GoogleOAuth2Util.doAuthenticateUserUser(code);
+    const tokens = await GoogleOAuth2Util.doAuthenticateUserUser(code);
+
+    if (tokens.refresh_token) {
+      return this.handleNewAuthentication(tokens.refresh_token);
+    } else {
+      return this.handleExistingAuthentication(tokens.access_token);
+    }
+  }
+
+  private static async handleNewAuthentication(refreshToken: string): Promise<string> {
     const email: string = await EmailUtil.getUserEmail(refreshToken);
 
-    const user: User = await UsersUtil.getUserByEmail(email);
-
-    if (user) {
-      UsersUtil.updateUserRefreshToken(user._id, refreshToken);
-
-      return user._id;
-    }
-
     return UsersUtil.addNewUser(refreshToken, email);
+  }
+
+  private static async handleExistingAuthentication(accessToken: string): Promise<string> {
+    const email: string = await EmailUtil.getUserEmail(accessToken);
+
+    return UsersUtil.getUserIdByEmail(email);
   }
 }

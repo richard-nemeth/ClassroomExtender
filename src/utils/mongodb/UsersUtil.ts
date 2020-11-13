@@ -44,8 +44,8 @@ export class UsersUtil {
     return foundUser.refresh_token;
   }
 
-  public static async getUserByEmail(email: string): Promise<User> {
-    return MongoDbConnectorUtil.getUsersCollection().findOne({email: email});
+  public static async getUserIdByEmail(email: string): Promise<string> {
+    return (await MongoDbConnectorUtil.getUsersCollection().findOne({email: email}))._id;
   }
 
   public static updateUserRefreshToken(userId: string, refreshToken: string): void {
