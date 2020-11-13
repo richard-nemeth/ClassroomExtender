@@ -12,9 +12,9 @@ import {RegistrationUtil} from '../utils/authentication/RegistrationUtil';
 
 import {ApplicationLogger} from '../utils/logger/Logger';
 
-export class RegistrationController extends BaseController {
+export class AuthenticationController extends BaseController {
 
-  private static readonly TAG: string = 'RegistrationController';
+  private static readonly TAG: string = 'AuthenticationController';
 
   public constructor() {
     super();
@@ -24,7 +24,7 @@ export class RegistrationController extends BaseController {
   }
 
   private initGetGoogleAuthenticationPath(): void {
-    this.router.get(RouteConstants.Auth.START_REGISTRATION, (request: Request, response: Response) => {
+    this.router.get(RouteConstants.Auth.START_AUTHENTICATION, (request: Request, response: Response) => {
       response.send(encodeURI(GoogleOAuth2Util.createAuthUrl())).status(200);
     });
   }
@@ -37,7 +37,7 @@ export class RegistrationController extends BaseController {
        this.processRegistration(registration, response);
       } else {
         ApplicationLogger.errorLog({
-          tag: RegistrationController.TAG,
+          tag: AuthenticationController.TAG,
           message: 'Invalid registrationCode received!'
         });
 
@@ -52,7 +52,7 @@ export class RegistrationController extends BaseController {
         response.send(encodeURI(userId)).status(200);
       } else {
         ApplicationLogger.errorLog({
-          tag: RegistrationController.TAG,
+          tag: AuthenticationController.TAG,
           message: 'Could not return userId!'
         });
 

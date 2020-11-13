@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 
 import {AUTH_INTERCEPTOR} from './interceptors/AuthInterceptor';
 
-import {RegistrationController} from './controllers/RegistrationController';
+import {AuthenticationController} from './controllers/AuthenticationController';
 import {CourseController} from './controllers/CourseController';
 
 import {ApplicationLogger} from './utils/logger/Logger';
@@ -75,7 +75,7 @@ class ClassroomExtenderNodeJSApplication {
   }
 
   private setControllers(): void {
-    this.app.use(new RegistrationController().getRouter());
+    this.app.use(new AuthenticationController().getRouter());
     this.app.use(new CourseController().getRouter());
   }
 

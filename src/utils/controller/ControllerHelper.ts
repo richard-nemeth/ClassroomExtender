@@ -45,6 +45,6 @@ export class ControllerHelper {
     const requestPath: string = request.path;
 
     return RouteConstants.Auth.PERSIST_REGISTRATION !== requestPath
-    && RouteConstants.Auth.START_REGISTRATION !== requestPath;
+    && RouteConstants.Auth.START_AUTHENTICATION !== requestPath;
   }
 }
