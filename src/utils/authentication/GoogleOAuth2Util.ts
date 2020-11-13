@@ -3,30 +3,33 @@ import {Configuration} from '../configuration/Configuration';
 
 export class GoogleOAuth2Util {
 
-  private static readonly AUTH_CLIENT = GoogleOAuth2Util.createGoogleAuthClient();
-
   private constructor() {
   }
 
   public static createAuthUrl(): string {
-    return GoogleOAuth2Util.AUTH_CLIENT.generateAuthUrl({
-      access_type: 'offline',
-      scope: Configuration.GOOGLE_CLASSROOM_SCOPES
-    });
+    return this.createGoogleAuthClient()
+      .generateAuthUrl({
+        access_type: 'offline',
+        scope: Configuration.GOOGLE_CLASSROOM_SCOPES
+      });
+
   }
 
   public static async doAuthenticateRegisteredUser(code: string): Promise<string> {
-    const {tokens} = await GoogleOAuth2Util.AUTH_CLIENT.getToken(code);
+    const authClient = this.createGoogleAuthClient();
+    const {tokens} = await authClient.getToken(code);
 
-    GoogleOAuth2Util.AUTH_CLIENT.setCredentials(tokens);
+    authClient.setCredentials(tokens);
 
     return tokens.refresh_token;
   }
 
   public static getActualAuthClient(refreshToken: string) {
-    this.AUTH_CLIENT.setCredentials({refresh_token: refreshToken});
+    const authClient = this.createGoogleAuthClient();
 
-    return this.AUTH_CLIENT;
+    authClient.setCredentials({refresh_token: refreshToken});
+
+    return authClient;
   }
 
   private static createGoogleAuthClient() {
