@@ -38,6 +38,7 @@ export class Configuration {
   }
 
   public static readonly GOOGLE_CLASSROOM_SCOPES: string[] = [
+    'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/classroom.courses.readonly',
     'https://www.googleapis.com/auth/classroom.rosters.readonly',
     'https://www.googleapis.com/auth/classroom.coursework.me',
