@@ -7,7 +7,7 @@ import {RouteConstants} from '../utils/constants/RouteConstants';
 
 import {GoogleOAuth2Util} from '../utils/authentication/GoogleOAuth2Util';
 
-import {AuthenticationRequest} from '../models/authentication/RegistrationRequest';
+import {AuthenticationRequest} from '../models/authentication/AuthenticationRequest';
 import {AuthenticationUtil} from '../utils/authentication/AuthenticationUtil';
 
 import {ApplicationLogger} from '../utils/logger/Logger';
