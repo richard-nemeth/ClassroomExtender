@@ -10,7 +10,7 @@ import {CoursesUtil} from '../utils/courses/CoursesUtil';
 
 import {ApplicationLogger} from '../utils/logger/Logger';
 
-import {CoursesResponse} from '../models/data/CoursesResponse';
+import {CoursesResponse} from '../models/data/courses/CoursesResponse';
 
 export class CourseController extends BaseController {
 
@@ -25,7 +25,6 @@ export class CourseController extends BaseController {
   private initGetMyTeacherCourses(): void {
     this.router.get(RouteConstants.Courses.GET_MY_TEACHER_COURSES, async (request: Request, response: Response) => {
       const refreshToken: string = await ControllerHelper.getUserRefreshTokenFromRequest(request);
-      const pageToken: string = CourseController.getPageTokenFromRequest(request);
 
       await CoursesUtil.getMyTeacherCourses(refreshToken, pageToken)
       .then((courseResponse: CoursesResponse) => {
@@ -41,13 +40,4 @@ export class CourseController extends BaseController {
     });
   }
 
-  private static getPageTokenFromRequest(request: Request): string {
-    const pageToken = request.query.pageToken;
-
-    if (pageToken) {
-      return pageToken.toString();
-    }
-
-    return null;
-  }
 }

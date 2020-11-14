@@ -3,7 +3,7 @@ import {google, classroom_v1} from 'googleapis';
 
 import {GoogleOAuth2Util} from "../authentication/GoogleOAuth2Util";
 
-import {CoursesResponse} from '../../models/data/CoursesResponse';
+import {CourseGoogleResponse} from '../../models/data/courses/CourseGoogleResponse';
 
 export class CoursesUtil {
 
@@ -11,7 +11,7 @@ export class CoursesUtil {
   }
 
 
-  public static async getMyTeacherCourses(refreshToken: string, pageToken: string): Promise<CoursesResponse> {
+  public static async getMyTeacherCourses(refreshToken: string, pageToken: string): Promise<CourseGoogleResponse> {
     const classroomApi = this.getClassroomApi(refreshToken);
 
     const response: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse> =
@@ -34,7 +34,7 @@ export class CoursesUtil {
     }
   }
 
-  private static createCoursesResponseFromGaxiosResponse(response: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>): CoursesResponse {
+  private static createCoursesResponseFromGaxiosResponse(response: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>): CourseGoogleResponse {
     return {
       courses: response.data.courses,
       nextPageToken: response.data.nextPageToken
