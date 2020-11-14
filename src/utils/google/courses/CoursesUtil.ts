@@ -17,8 +17,7 @@ export class CoursesUtil {
     const classroomApi: classroom_v1.Classroom = GoogleApiUtil.getClassroomApi(refreshToken);
     const allResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[] = new Array();
 
-    this.getAllPageOfMyTeacherCourses(classroomApi, allResponses);
-
+    await this.getAllPageOfMyTeacherCourses(classroomApi, allResponses);
 
     return this.getAllCoursesFromGoogleResponses(allResponses);
   }
@@ -39,10 +38,10 @@ export class CoursesUtil {
   }
 
   private static getAllCoursesFromGoogleResponses(allGoogleResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[]): Course[] {
-    const allCourses: Course[] = new Array();
+    let allCourses: Course[] = new Array();
 
     allGoogleResponses.forEach((googleResponse: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>) => {
-      allCourses.concat(this.createCoursesFromGoogleResponse(googleResponse.data.courses));
+      allCourses = allCourses.concat(this.createCoursesFromGoogleResponse(googleResponse.data.courses));
     });
 
     return allCourses;
