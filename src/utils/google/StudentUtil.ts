@@ -59,8 +59,7 @@ export class StudentUtil {
     googleStudents.forEach((googleStudent: classroom_v1.Schema$Student) => {
       students.push({
         id: googleStudent.userId,
-        name: googleStudent.profile.name.fullName,
-        email: googleStudent.profile.emailAddress
+        name: googleStudent.profile.name.fullName
       });
     });
 
