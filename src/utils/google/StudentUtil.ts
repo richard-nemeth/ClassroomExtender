@@ -47,8 +47,7 @@ export class StudentUtil {
     let allStudents: Student[] = new Array();
 
     allGoogleResponses.forEach((googleResponse: GaxiosResponse<classroom_v1.Schema$ListStudentsResponse>) => {
-      allStudents = allStudents.concat();
-      googleResponse.data.students
+      allStudents = allStudents.concat(this.createStudentsFromGoogleResponse(googleResponse.data.students));
     });
 
     return allStudents;
