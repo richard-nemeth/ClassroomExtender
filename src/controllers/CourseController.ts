@@ -20,7 +20,7 @@ export class CourseController extends BaseController {
     super();
 
     this.initGetMyTeacherCourses();
-    this.initgetMyInactiveTeacherCourses();
+    this.initGetMyInactiveTeacherCourses();
   }
 
   private initGetMyTeacherCourses(): void {
@@ -41,7 +41,7 @@ export class CourseController extends BaseController {
     });
   }
 
-  private initgetMyInactiveTeacherCourses(): void {
+  private initGetMyInactiveTeacherCourses(): void {
     this.router.get(RouteConstants.Courses.GET_MY_TEACHER_INACTIVE_COURSES, async (request: Request, response: Response) => {
       const refreshToken: string = await ControllerHelper.getUserRefreshTokenFromRequest(request);
 
