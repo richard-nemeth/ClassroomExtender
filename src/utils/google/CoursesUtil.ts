@@ -12,12 +12,11 @@ export class CoursesUtil {
   private constructor() {
   }
 
-
   public static async getMyTeacherCourses(refreshToken: string): Promise<Course[]> {
     const classroomApi: classroom_v1.Classroom = GoogleApiUtil.getClassroomApi(refreshToken);
     const allResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[] = new Array();
 
-    await this.getAllPageOfCourses(classroomApi, allResponses, CoursesConstants.getMyTeacherCourseListParams());
+    await this.getAllPagesOfCourses(classroomApi, allResponses, CoursesConstants.getMyTeacherCourseListParams());
 
     return this.getAllCoursesFromGoogleResponses(allResponses);
   }
@@ -26,12 +25,12 @@ export class CoursesUtil {
     const classroomApi: classroom_v1.Classroom = GoogleApiUtil.getClassroomApi(refreshToken);
     const allResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[] = new Array();
 
-    await this.getAllPageOfCourses(classroomApi, allResponses, CoursesConstants.getMyInactiveTeacherCourseListParams());
+    await this.getAllPagesOfCourses(classroomApi, allResponses, CoursesConstants.getMyInactiveTeacherCourseListParams());
 
     return this.getAllCoursesFromGoogleResponses(allResponses);
   }
 
-  private static async getAllPageOfCourses(
+  private static async getAllPagesOfCourses(
     classroomApi: classroom_v1.Classroom,
     allResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[],
     queryOptions: any,
@@ -46,7 +45,7 @@ export class CoursesUtil {
     
     if (pageToken) {
       queryOptions.pageToken = pageToken;
-      await this.getAllPageOfCourses(classroomApi, allResponses, queryOptions);
+      await this.getAllPagesOfCourses(classroomApi, allResponses, queryOptions);
     }
   }
 
