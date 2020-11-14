@@ -8,6 +8,7 @@ import {AUTH_INTERCEPTOR} from './interceptors/AuthInterceptor';
 
 import {AuthenticationController} from './controllers/AuthenticationController';
 import {CourseController} from './controllers/CourseController';
+import {StudentController} from './controllers/StudentController';
 
 import {ApplicationLogger} from './utils/logger/Logger';
 
@@ -77,6 +78,7 @@ class ClassroomExtenderNodeJSApplication {
   private setControllers(): void {
     this.app.use(new AuthenticationController().getRouter());
     this.app.use(new CourseController().getRouter());
+    this.app.use(new StudentController().getRouter());
   }
 
   private setAppListening(): void {
