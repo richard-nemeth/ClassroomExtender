@@ -9,5 +9,6 @@ export class RouteConstants {
 
   public static readonly Courses = class {
     public static readonly GET_MY_TEACHER_COURSES = '/getMyTeacherCourses';
+    public static readonly GET_MY_TEACHER_INACTIVE_COURSES = '/getMyTEacherInactiveCourses';
   }
 }

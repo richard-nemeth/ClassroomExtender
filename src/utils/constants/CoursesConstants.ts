@@ -10,4 +10,12 @@ export class CoursesConstants {
       pageToken: pageToken
     }
   }
+
+  public static getMyInactiveTeacherCourseListParams(pageToken?: string) {
+    return {
+      teacherId: "me",
+      courseStates: ['ARCHIVED'],
+      pageToken: pageToken
+    }
+  }
 }

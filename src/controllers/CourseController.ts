@@ -40,4 +40,21 @@ export class CourseController extends BaseController {
     });
   }
 
+  private initgetMyInactiveTeacherCourses(): void {
+    this.router.get(RouteConstants.Courses.GET_MY_TEACHER_INACTIVE_COURSES, async (request: Request, response: Response) => {
+      const refreshToken: string = await ControllerHelper.getUserRefreshTokenFromRequest(request);
+
+      await CoursesUtil.getMyInactiveTeacherCourses(refreshToken)
+      .then((courses: Course[]) => {
+        response.json(courses);
+      }).catch(error => {
+        ApplicationLogger.errorLog({
+          tag: CourseController.TAG,
+          message: 'Error occured while loading my inactive teacher courses: ' + error
+        });
+
+        response.sendStatus(500);
+      });
+    });
+  }
 }
