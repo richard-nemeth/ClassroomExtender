@@ -10,7 +10,7 @@ import {CoursesUtil} from '../utils/google/courses/CoursesUtil';
 
 import {ApplicationLogger} from '../utils/logger/Logger';
 
-import {CoursesResponse} from '../models/data/courses/CoursesResponse';
+import {Course} from '../models/data/Course';
 
 export class CourseController extends BaseController {
 
@@ -26,9 +26,9 @@ export class CourseController extends BaseController {
     this.router.get(RouteConstants.Courses.GET_MY_TEACHER_COURSES, async (request: Request, response: Response) => {
       const refreshToken: string = await ControllerHelper.getUserRefreshTokenFromRequest(request);
 
-      await CoursesUtil.getMyTeacherCourses(refreshToken, pageToken)
-      .then((courseResponse: CoursesResponse) => {
-        response.json(courseResponse);
+      await CoursesUtil.getMyTeacherCourses(refreshToken)
+      .then((courses: Course[]) => {
+        response.json(courses);
       }).catch(error => {
         ApplicationLogger.errorLog({
           tag: CourseController.TAG,

@@ -5,7 +5,7 @@ import {GoogleApiUtil} from '../GoogleApiUtil';
 
 import {CoursesConstants} from '../../constants/CoursesConstants';
 
-import {CourseGoogleResponse} from '../../../models/data/courses/CourseGoogleResponse';
+import {Course} from '../../../models/data/Course';
 
 export class CoursesUtil {
 
@@ -13,19 +13,52 @@ export class CoursesUtil {
   }
 
 
-  public static async getMyTeacherCourses(refreshToken: string, pageToken: string): Promise<CourseGoogleResponse> {
-    const classroomApi = GoogleApiUtil.getClassroomApi(refreshToken);
+  public static async getMyTeacherCourses(refreshToken: string): Promise<Course[]> {
+    const classroomApi: classroom_v1.Classroom = GoogleApiUtil.getClassroomApi(refreshToken);
+    const allResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[] = new Array();
 
-    const response: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse> =
-      await classroomApi.courses.list(CoursesConstants.getMyTeacherCourseListParams(pageToken));
+    this.getAllPageOfMyTeacherCourses(classroomApi, allResponses);
 
-    return this.createCoursesResponseFromGaxiosResponse(response);
+
+    return this.getAllCoursesFromGoogleResponses(allResponses);
   }
 
-  private static createCoursesResponseFromGaxiosResponse(response: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>): CourseGoogleResponse {
-    return {
-      courses: response.data.courses,
-      nextPageToken: response.data.nextPageToken
+  private static async getAllPageOfMyTeacherCourses(
+    classroomApi: classroom_v1.Classroom,
+    allResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[]
+  ): Promise<void> {
+    const googleResponse: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse> =
+      await classroomApi.courses.list(CoursesConstants.getMyTeacherCourseListParams());
+    const pageToken: string = googleResponse.data.nextPageToken;
+    
+    allResponses.push(googleResponse);
+
+    if (pageToken) {
+      await this.getAllPageOfMyTeacherCourses(classroomApi, allResponses);
     }
+  }
+
+  private static getAllCoursesFromGoogleResponses(allGoogleResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[]): Course[] {
+    const allCourses: Course[] = new Array();
+
+    allGoogleResponses.forEach((googleResponse: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>) => {
+      allCourses.concat(this.createCoursesFromGoogleResponse(googleResponse.data.courses));
+    });
+
+    return allCourses;
+  }
+
+  private static createCoursesFromGoogleResponse(googleCourses: classroom_v1.Schema$Course[]): Course[] {
+    const courses: Course[] = new Array();
+
+    googleCourses.forEach((googleCourse: classroom_v1.Schema$Course) => {
+      courses.push({
+        id : googleCourse.id,
+        name : googleCourse.name,
+        link: googleCourse.alternateLink
+      });
+    });
+
+    return courses;
   }
 }
