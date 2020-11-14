@@ -24,16 +24,19 @@ export class CoursesUtil {
 
   private static async getAllPageOfMyTeacherCourses(
     classroomApi: classroom_v1.Classroom,
-    allResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[]
+    allResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[],
+    pageToken?: string
   ): Promise<void> {
     const googleResponse: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse> =
-      await classroomApi.courses.list(CoursesConstants.getMyTeacherCourseListParams());
-    const pageToken: string = googleResponse.data.nextPageToken;
+      await classroomApi.courses.list(CoursesConstants.getMyTeacherCourseListParams(pageToken));
+    pageToken = googleResponse.data.nextPageToken;
     
-    allResponses.push(googleResponse);
-
+    if (googleResponse.data.courses) {
+      allResponses.push(googleResponse);
+    }
+    
     if (pageToken) {
-      await this.getAllPageOfMyTeacherCourses(classroomApi, allResponses);
+      await this.getAllPageOfMyTeacherCourses(classroomApi, allResponses, pageToken);
     }
   }
 
