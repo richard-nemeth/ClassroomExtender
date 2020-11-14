@@ -20,6 +20,7 @@ export class CourseController extends BaseController {
     super();
 
     this.initGetMyTeacherCourses();
+    this.initgetMyInactiveTeacherCourses();
   }
 
   private initGetMyTeacherCourses(): void {
