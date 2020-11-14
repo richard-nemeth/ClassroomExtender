@@ -11,4 +11,8 @@ export class RouteConstants {
     public static readonly GET_MY_TEACHER_COURSES = '/getMyTeacherCourses';
     public static readonly GET_MY_INACTIVE_TEACHER_COURSES = '/getMyInactiveTeacherCourses';
   }
+
+  public static readonly Students = class {
+    public static readonly GET_STUDENTS_FOR_COURSE = '/getStudentsForCourse';
+  }
 }
