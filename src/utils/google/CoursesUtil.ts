@@ -1,11 +1,11 @@
 import {GaxiosResponse} from 'gaxios';
 import {classroom_v1} from 'googleapis';
 
-import {GoogleApiUtil} from '../GoogleApiUtil';
+import {GoogleApiUtil} from './GoogleApiUtil';
 
-import {CoursesConstants} from '../../constants/CoursesConstants';
+import {CoursesConstants} from '../constants/CoursesConstants';
 
-import {Course} from '../../../models/data/Course';
+import {Course} from '../../models/data/Course';
 
 export class CoursesUtil {
 

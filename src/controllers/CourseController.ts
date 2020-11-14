@@ -6,7 +6,7 @@ import {RouteConstants} from '../utils/constants/RouteConstants';
 
 import {ControllerHelper} from '../utils/controller/ControllerHelper';
 
-import {CoursesUtil} from '../utils/google/courses/CoursesUtil';
+import {CoursesUtil} from '../utils/google/CoursesUtil';
 
 import {ApplicationLogger} from '../utils/logger/Logger';
 
