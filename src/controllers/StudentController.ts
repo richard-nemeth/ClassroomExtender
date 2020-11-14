@@ -23,7 +23,20 @@ export class StudentController extends BaseController {
   private initGetStudentsForCourse() {
     this.router.get(RouteConstants.Students.GET_STUDENTS_FOR_COURSE, async (request: Request, response: Response) => {
       const refreshToken: string = await ControllerHelper.getUserRefreshTokenFromRequest(request);
-      const courseId: string = request.params['courseId'];
+      let courseId: string;
+
+      try {
+        courseId =request.query.courseId.toString();
+      } catch(erro: any) {
+        ApplicationLogger.errorLog({
+          tag: StudentController.TAG,
+          message: 'courseId is missing!'
+        });
+
+        response.sendStatus(500);
+
+        return;
+      };
 
       await StudentUtil.getStudentsForCourse(refreshToken, courseId)
         .then((students: Student[]) => {
@@ -38,4 +51,5 @@ export class StudentController extends BaseController {
         });
     });
   }
+
 }
