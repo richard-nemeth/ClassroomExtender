@@ -42,7 +42,7 @@ export class CourseController extends BaseController {
   }
 
   private initGetMyInactiveTeacherCourses(): void {
-    this.router.get(RouteConstants.Courses.GET_MY_TEACHER_INACTIVE_COURSES, async (request: Request, response: Response) => {
+    this.router.get(RouteConstants.Courses.GET_MY_INACTIVE_TEACHER_COURSES, async (request: Request, response: Response) => {
       const refreshToken: string = await ControllerHelper.getUserRefreshTokenFromRequest(request);
 
       await CoursesUtil.getMyInactiveTeacherCourses(refreshToken)
