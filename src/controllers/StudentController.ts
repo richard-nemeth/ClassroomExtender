@@ -38,17 +38,4 @@ export class StudentController extends BaseController {
         });
     });
   }
-
-  /*
-  await CoursesUtil.getMyTeacherCourses(refreshToken)
-      .then((courses: Course[]) => {
-        response.json(courses);
-      }).catch(error => {
-        ApplicationLogger.errorLog({
-          tag: CourseController.TAG,
-          message: 'Error occured while loading my teacher courses: ' + error
-        });
-
-        response.sendStatus(500);
-      });*/
 }
