@@ -4,6 +4,7 @@ import {MongoDbConnectorUtil} from './MongoDbConnectorUtil';
 
 import {StudentsCollection} from '../../models/data/StudentsCollection';
 import {StoredStudentData} from '../../models/data/StoredStudentData';
+import { StudentsConstants } from '../constants/StudentsConstants';
 
 export class StudentsUtil {
 
@@ -18,6 +19,12 @@ export class StudentsUtil {
     await this.persistStudentCollection(courseId, studentsForCourse);
   }
 
+  public static async getStudentsForCourseId(courseId: string): Promise<StudentsCollection> {
+    return await MongoDbConnectorUtil.getStudentsCollection().findOne({
+      courseId: courseId
+    });
+  }
+
   private static async persistStudentCollection(courseId: string, studentsForCourse: StoredStudentData[]): Promise<void> {
     await MongoDbConnectorUtil.getStudentsCollection().insertOne({
       _id: null,
@@ -27,13 +34,11 @@ export class StudentsUtil {
   }
 
   private static async checkAreCourseStudentsAlreadyLoaded(courseId: string): Promise<void> {
-    await MongoDbConnectorUtil.getStudentsCollection().findOne({
-      courseId: courseId
-    }).then((studentCollection: StudentsCollection) => {
-      if (studentCollection) {
-        throw new Error('Students already loaded for course!');
-      }
-    });
+    const studentsCollection: StudentsConstants = await this.getStudentsForCourseId(courseId);
+
+    if (studentsCollection) {
+      throw new Error('Students already loaded for course!');
+    }
   }
 
   private static processXMLStudens(fileContent: Buffer): StoredStudentData[] {
