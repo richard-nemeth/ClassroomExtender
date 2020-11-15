@@ -1,4 +1,4 @@
-export interface StudentSubmisison {
+export interface StudentSubmission {
   id: string;
   courseWorkId: string;
   late: boolean;

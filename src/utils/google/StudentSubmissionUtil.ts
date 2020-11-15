@@ -1,7 +1,7 @@
 import {GaxiosResponse} from 'gaxios';
 import {classroom_v1} from 'googleapis';
 
-import {StudentSubmisison} from '../../models/data/StudentSubmission';
+import {StudentSubmission} from '../../models/data/StudentSubmission';
 
 export class StudentSubmissionUtil {
 
@@ -12,7 +12,7 @@ export class StudentSubmissionUtil {
     classroomApi: classroom_v1.Classroom,
     courseId: string,
     studentId: string
-  ): Promise<StudentSubmisison[]> {
+  ): Promise<StudentSubmission[]> {
     const studentSubmissionResponse: GaxiosResponse<classroom_v1.Schema$ListStudentSubmissionsResponse>
       = await classroomApi.courses.courseWork.studentSubmissions.list({
         courseId: courseId,
@@ -25,8 +25,8 @@ export class StudentSubmissionUtil {
 
   private static getStudentSubmissionsFromGoogleStudentSubmissions(
     googleStudentSubmissions: classroom_v1.Schema$StudentSubmission[]
-  ): StudentSubmisison[] {
-    const studentSubmissions: StudentSubmisison[] = new Array();
+  ): StudentSubmission[] {
+    const studentSubmissions: StudentSubmission[] = new Array();
 
     if (googleStudentSubmissions) {
       googleStudentSubmissions.forEach((googleStudentSubmission: classroom_v1.Schema$StudentSubmission) => {
@@ -41,7 +41,7 @@ export class StudentSubmissionUtil {
 
   private static createStudentSubmissionFromGoogleStudentSubmission(
     googleStudentSubmission: classroom_v1.Schema$StudentSubmission
-  ): StudentSubmisison {
+  ): StudentSubmission {
     return {
       id: googleStudentSubmission.id,
       courseWorkId: googleStudentSubmission.courseWorkId,
