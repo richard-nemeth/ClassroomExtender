@@ -21,6 +21,7 @@ export class CourseController extends BaseController {
 
     this.initGetMyTeacherCourses();
     this.initGetMyInactiveTeacherCourses();
+    this.initUploadCourseStudents();
   }
 
   private initGetMyTeacherCourses(): void {
@@ -56,6 +57,14 @@ export class CourseController extends BaseController {
 
         response.sendStatus(500);
       });
+    });
+  }
+
+  private initUploadCourseStudents(): void {
+    this.router.post(RouteConstants.Courses.POST_COURSE_STUDENTS, async (request: Request, response: Response) => {
+      console.log(request.body);
+
+      response.send(200);
     });
   }
 }
