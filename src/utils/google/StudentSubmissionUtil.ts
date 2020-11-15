@@ -44,6 +44,7 @@ export class StudentSubmissionUtil {
   ): StudentSubmisison {
     return {
       id: googleStudentSubmission.id,
+      courseWorkId: googleStudentSubmission.courseWorkId,
       late: googleStudentSubmission.late,
       draft_grade: googleStudentSubmission.draftGrade,
       final_grade: googleStudentSubmission.assignedGrade
