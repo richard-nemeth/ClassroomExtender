@@ -8,11 +8,7 @@ export class CourseWorkUtil {
   private constructor() {
   }
 
-  public static async getCourseWorkForCourse(classroomApi: classroom_v1.Classroom, courseId: string) {
-    return await this.getCourseWorks(courseId, classroomApi);
-  }
-
-  private static async getCourseWorks(courseId: string, classroomApi: classroom_v1.Classroom): Promise<CourseWork[]> {
+  public static async getCourseWorkForCourse(courseId: string, classroomApi: classroom_v1.Classroom): Promise<CourseWork[]> {
     const courseWorkResponse: GaxiosResponse<classroom_v1.Schema$ListCourseWorkResponse>
      = await classroomApi.courses.courseWork.list({courseId: courseId});
 

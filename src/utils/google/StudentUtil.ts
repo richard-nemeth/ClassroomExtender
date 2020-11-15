@@ -10,6 +10,7 @@ import {StudentsConstants} from '../constants/StudentsConstants';
 import {Student} from '../../models/data/Student';
 import {StudentsCollection} from '../../models/data/StudentsCollection';
 import {StoredStudentData} from '../../models/data/StoredStudentData';
+import { StudentSubmissionUtil } from './StudentSubmissionUtil';
 
 export class StudentUtil {
 
@@ -22,7 +23,7 @@ export class StudentUtil {
 
     await this.getAllPagesOfStudents(classroomApi, allResponses, StudentsConstants.getStudentsForCourse(courseId));
 
-    return this.getAllStudentsFromGoogleResponses(allResponses, courseId);
+    return this.getAllStudentsFromGoogleResponses(allResponses, courseId, classroomApi);
   }
 
   private static async getAllPagesOfStudents(
@@ -47,34 +48,66 @@ export class StudentUtil {
 
   private static async getAllStudentsFromGoogleResponses(
     allGoogleResponses: GaxiosResponse<classroom_v1.Schema$ListStudentsResponse>[],
-    courseId: string
+    courseId: string,
+    classroomApi: classroom_v1.Classroom
   ): Promise<Student[]> {
     let allStudents: Student[] = new Array();
     const studentCollection: StudentsCollection = await StudentsUtil.getStudentsForCourseId(courseId);
 
     allGoogleResponses.forEach((googleResponse: GaxiosResponse<classroom_v1.Schema$ListStudentsResponse>) => {
       allStudents = allStudents.concat(
-        this.createStudentsFromGoogleResponse(googleResponse.data.students, studentCollection)
+        
       );
     });
 
+    for (const googleResponse of allGoogleResponses) {
+      const resultStudents
+        = await this.createStudentsFromGoogleResponse(
+            googleResponse.data.students,
+            studentCollection,
+            classroomApi,
+            courseId
+          );
+
+        allStudents = allStudents.concat(resultStudents);
+    }
     return allStudents;
   }
 
-  private static createStudentsFromGoogleResponse(
+  private static async createStudentsFromGoogleResponse(
     googleStudents: classroom_v1.Schema$Student[],
-    studentCollection: StudentsCollection
-  ): Student[] {
+    studentCollection: StudentsCollection,
+    classroomApi: classroom_v1.Classroom,
+    courseId: string
+  ): Promise<Student[]> {
     const students: Student[] = new Array();
 
-    googleStudents.forEach((googleStudent: classroom_v1.Schema$Student) => {
-      students.push({
-        id: googleStudent.userId,
-        storedStudentData: this.getStoredStudentDataFromByStudentCollection(studentCollection, googleStudent)
-      });
-    });
+    for (const googleStudent of  googleStudents) {
+      const student
+        = await this.createStudentFromGoogleStudent(
+            googleStudent,
+            studentCollection,
+            classroomApi,
+            courseId
+          );
+
+        students.push(student);
+    }
 
     return students;
+  }
+
+  private static async createStudentFromGoogleStudent(
+    googleStudent: classroom_v1.Schema$Student,
+    studentCollection: StudentsCollection,
+    classroomApi: classroom_v1.Classroom,
+    courseId: string
+  ): Promise<Student> {
+    return {
+      id: googleStudent.userId,
+      storedStudentData: this.getStoredStudentDataFromByStudentCollection(studentCollection, googleStudent),
+      submissions: await StudentSubmissionUtil.getStudentSubmissions(classroomApi, courseId, googleStudent.userId)
+    }
   }
 
   private static getStoredStudentDataFromByStudentCollection(

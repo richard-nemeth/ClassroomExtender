@@ -73,7 +73,7 @@ export class CoursesUtil {
     const courses: Course[] = new Array();
 
     for (const googleCourse of googleCourses) {
-      const courseWorks: CourseWork[] = await CourseWorkUtil.getCourseWorkForCourse(classroomApi, googleCourse.id);
+      const courseWorks: CourseWork[] = await CourseWorkUtil.getCourseWorkForCourse(googleCourse.id, classroomApi);
 
       courses.push({
         id : googleCourse.id,
