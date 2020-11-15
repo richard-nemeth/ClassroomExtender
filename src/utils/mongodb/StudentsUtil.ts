@@ -3,6 +3,7 @@ import xlsx from 'node-xlsx';
 import {MongoDbConnectorUtil} from './MongoDbConnectorUtil';
 
 import {Student} from '../../models/data/Student';
+import { StudentsCollection } from '../../models/data/StudentsCollection';
 
 export class StudentsUtil {
 
@@ -11,6 +12,8 @@ export class StudentsUtil {
 
   public static async storeStudentsInDb(courseId: string, fileContent: Buffer): Promise<void> {
     const studentsForCourse: Student[] = this.processXMLStudens(fileContent);
+
+    await this.checkAreCourseStudentsAlreadyLoaded(courseId);
 
     await this.persistStudentCollection(courseId, studentsForCourse);
   }
@@ -21,8 +24,16 @@ export class StudentsUtil {
       courseId: courseId,
       students: studentsForCourse
     });
+  }
 
-    return;
+  private static async checkAreCourseStudentsAlreadyLoaded(courseId: string): Promise<void> {
+    await MongoDbConnectorUtil.getStudentsCollection().findOne({
+      courseId: courseId
+    }).then((studentCollection: StudentsCollection) => {
+      if (studentCollection) {
+        throw new Error('Students already loaded for course!');
+      }
+    });
   }
 
   private static processXMLStudens(fileContent: Buffer): Student[] {
