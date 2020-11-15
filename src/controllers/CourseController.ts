@@ -1,4 +1,5 @@
 import {Request, Response} from 'express';
+import xlsx from 'node-xlsx';
 
 import {BaseController} from './BaseController';
 
@@ -68,7 +69,7 @@ export class CourseController extends BaseController {
       let fileContent: Buffer;
 
       try {
-        courseId = this.getCourseIdFromRequest(request);
+        courseId = this.getCourseIdFromRequestBody(request);
         fileContent = this.getFileContentFromRequest(request);
       } catch(error: any) {
         ApplicationLogger.errorLog({
@@ -97,11 +98,29 @@ export class CourseController extends BaseController {
 
   private initGetCourseDataExcel(): void {
     this.router.get(RouteConstants.Courses.GET_COURSE_DATA_EXCEL, async (request: Request, response: Response) => {
-      response.sendFile(__dirname + '/test.txt');
+      let courseId: string;
+
+      try {
+        courseId =request.query.courseId.toString();
+      } catch(erro: any) {
+        ApplicationLogger.errorLog({
+          tag: CourseController.TAG,
+          message: 'courseId is missing'
+        });
+
+        response.sendStatus(500);
+
+        return;
+      };
+
+      const data = [[1, 2, 3]]
+      let buffer: ArrayBuffer = xlsx.build([{name: "mySheetName", data: data}]);
+
+      response.send(buffer);
     })
   }
 
-  private getCourseIdFromRequest(request: Request): string {
+  private getCourseIdFromRequestBody(request: Request): string {
     const courseId: string = request.body.courseId;
 
     if (!courseId) {
