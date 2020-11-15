@@ -23,6 +23,7 @@ export class CourseController extends BaseController {
     this.initGetMyTeacherCourses();
     this.initGetMyInactiveTeacherCourses();
     this.initUploadCourseStudents();
+    this.initGetCourseDataExcel();
   }
 
   private initGetMyTeacherCourses(): void {
@@ -92,6 +93,12 @@ export class CourseController extends BaseController {
         response.sendStatus(500);
       });
     });
+  }
+
+  private initGetCourseDataExcel(): void {
+    this.router.get(RouteConstants.Courses.GET_COURSE_DATA_EXCEL, async (request: Request, response: Response) => {
+      response.sendFile(__dirname + '/test.txt');
+    })
   }
 
   private getCourseIdFromRequest(request: Request): string {
