@@ -32,6 +32,13 @@ export class CoursesUtil {
     return this.getAllCoursesFromGoogleResponses(classroomApi, allResponses);
   }
 
+  public static async getCourseById(refreshToken: string, courseId: string) {
+    const classroomApi: classroom_v1.Classroom = GoogleApiUtil.getClassroomApi(refreshToken);
+    const courseResponse: GaxiosResponse<classroom_v1.Schema$Course> = await classroomApi.courses.get({id: courseId});
+
+    return this.getCourseFromGoogleResponse(classroomApi, courseResponse.data);
+  }
+
   private static async getAllPagesOfCourses(
     classroomApi: classroom_v1.Classroom,
     allResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[],
@@ -73,16 +80,23 @@ export class CoursesUtil {
     const courses: Course[] = new Array();
 
     for (const googleCourse of googleCourses) {
-      const courseWorks: CourseWork[] = await CourseWorkUtil.getCourseWorkForCourse(googleCourse.id, classroomApi);
-
-      courses.push({
-        id : googleCourse.id,
-        name : googleCourse.name,
-        link: googleCourse.alternateLink,
-        courseWorks: courseWorks
-      });
+      courses.push(await this.getCourseFromGoogleResponse(classroomApi, googleCourse));
     }
 
     return courses;
+  }
+
+  private static async getCourseFromGoogleResponse(
+    classroomApi: classroom_v1.Classroom,
+    googleCourse: classroom_v1.Schema$Course
+  ): Promise<Course> {
+    const courseWorks: CourseWork[] = await CourseWorkUtil.getCourseWorkForCourse(googleCourse.id, classroomApi);
+
+    return {
+      id : googleCourse.id,
+      name : googleCourse.name,
+      link: googleCourse.alternateLink,
+      courseWorks: courseWorks
+      }
   }
 }

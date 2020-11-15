@@ -4,7 +4,7 @@ import {MongoDbConnectorUtil} from './MongoDbConnectorUtil';
 
 import {StudentsCollection} from '../../models/data/StudentsCollection';
 import {StoredStudentData} from '../../models/data/StoredStudentData';
-import { StudentsConstants } from '../constants/StudentsConstants';
+import {StudentsConstants} from '../constants/StudentsConstants';
 
 export class StudentsUtil {
 
