@@ -62,9 +62,9 @@ export class CourseController extends BaseController {
 
   private initUploadCourseStudents(): void {
     this.router.post(RouteConstants.Courses.POST_COURSE_STUDENTS, async (request: Request, response: Response) => {
-      console.log(request.body);
+      console.log(request.files);
 
-      response.send(200);
+      response.sendStatus(200);
     });
   }
 }

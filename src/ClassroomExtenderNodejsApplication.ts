@@ -3,6 +3,7 @@ import {Application} from 'express';
 import cors, {CorsOptions} from 'cors';
 import {String} from 'typescript-string-operations';
 import bodyParser from 'body-parser';
+import multer from 'multer';
 
 import {AUTH_INTERCEPTOR} from './interceptors/AuthInterceptor';
 
@@ -52,7 +53,7 @@ class ClassroomExtenderNodeJSApplication {
 
   private setMiddleWares(): void {
     this.setCrossOriginSupport();
-    this.setBodyParser();
+    this.setBodyParsers();
     this.setInterceptors();
   }
 
@@ -60,8 +61,10 @@ class ClassroomExtenderNodeJSApplication {
     this.app.use(cors(this.getCorsOptions()));
   }
 
-  private setBodyParser(): void {
-    this.app.use(bodyParser.json())
+  private setBodyParsers(): void {
+    this.app.use(bodyParser.json());
+
+    this.app.use(multer().any());
   }
 
   private setInterceptors(): void {
