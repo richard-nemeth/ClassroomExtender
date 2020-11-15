@@ -105,7 +105,7 @@ export class CourseController extends BaseController {
   }
 
   private getFileContentFromRequest(request: Request): Buffer {
-    const fileContent: Buffer = request.files[0];
+    const fileContent: Buffer = request.files[0].buffer;
 
     if (!fileContent) {
       throw new Error('Invalid fileContent for uploadCourseStudents!');
