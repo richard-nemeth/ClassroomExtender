@@ -39,19 +39,32 @@ export class CourseWorkUtil {
   }
 
   private static getDueDate(googleCourseWork: classroom_v1.Schema$CourseWork): string {
-    const date: Date = new Date();
-    date.setUTCFullYear(
-      googleCourseWork.dueDate.year,
-      googleCourseWork.dueDate.month,
-      googleCourseWork.dueDate.day
-    );
+    let finalDate: Date;
 
-    date.setUTCHours(
-      googleCourseWork.dueTime.hours ? googleCourseWork.dueTime.hours : 0,
-      googleCourseWork.dueTime.minutes ? googleCourseWork.dueTime.minutes : 0,
-      googleCourseWork.dueTime.seconds ? googleCourseWork.dueTime.seconds : 0
-    );
+    if (googleCourseWork.dueDate) {
+      const date: Date = new Date();
+
+      date.setUTCFullYear(
+        googleCourseWork.dueDate.year,
+        googleCourseWork.dueDate.month,
+        googleCourseWork.dueDate.day
+      );
+
+      if (googleCourseWork.dueTime) {
+        date.setUTCHours(
+          googleCourseWork.dueTime.hours ? googleCourseWork.dueTime.hours : 0,
+          googleCourseWork.dueTime.minutes ? googleCourseWork.dueTime.minutes : 0,
+          googleCourseWork.dueTime.seconds ? googleCourseWork.dueTime.seconds : 0
+        );
+      }
+
+      finalDate = date;
+    }
    
-    return date.toLocaleString();
+    if (finalDate) {
+      return finalDate.toLocaleString();
+    } else {
+      return null;
+    }
   }
 }
