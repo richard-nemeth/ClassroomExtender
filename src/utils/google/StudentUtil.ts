@@ -9,7 +9,7 @@ import {StudentsConstants} from '../constants/StudentsConstants';
 
 import {Student} from '../../models/data/Student';
 import {StudentsCollection} from '../../models/data/StudentsCollection';
-import { StoredStudentData } from '../../models/data/StoredStudentData';
+import {StoredStudentData} from '../../models/data/StoredStudentData';
 
 export class StudentUtil {
 

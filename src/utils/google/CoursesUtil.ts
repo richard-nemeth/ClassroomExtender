@@ -2,10 +2,12 @@ import {GaxiosResponse} from 'gaxios';
 import {classroom_v1} from 'googleapis';
 
 import {GoogleApiUtil} from './GoogleApiUtil';
+import {CourseWorkUtil} from './CourseWorkUtil';
 
 import {CoursesConstants} from '../constants/CoursesConstants';
 
 import {Course} from '../../models/data/Course';
+import {CourseWork} from '../../models/data/CourseWork';
 
 export class CoursesUtil {
 
@@ -18,7 +20,7 @@ export class CoursesUtil {
 
     await this.getAllPagesOfCourses(classroomApi, allResponses, CoursesConstants.getMyTeacherCourseListParams());
 
-    return this.getAllCoursesFromGoogleResponses(allResponses);
+    return this.getAllCoursesFromGoogleResponses(classroomApi, allResponses);
   }
 
   public static async getMyInactiveTeacherCourses(refreshToken: string): Promise<Course[]> {
@@ -27,7 +29,7 @@ export class CoursesUtil {
 
     await this.getAllPagesOfCourses(classroomApi, allResponses, CoursesConstants.getMyInactiveTeacherCourseListParams());
 
-    return this.getAllCoursesFromGoogleResponses(allResponses);
+    return this.getAllCoursesFromGoogleResponses(classroomApi, allResponses);
   }
 
   private static async getAllPagesOfCourses(
@@ -49,26 +51,37 @@ export class CoursesUtil {
     }
   }
 
-  private static getAllCoursesFromGoogleResponses(allGoogleResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[]): Course[] {
+  private static async getAllCoursesFromGoogleResponses(
+    classroomApi: classroom_v1.Classroom,
+    allGoogleResponses: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>[]
+  ): Promise<Course[]> {
     let allCourses: Course[] = new Array();
 
-    allGoogleResponses.forEach((googleResponse: GaxiosResponse<classroom_v1.Schema$ListCoursesResponse>) => {
-      allCourses = allCourses.concat(this.createCoursesFromGoogleResponse(googleResponse.data.courses));
-    });
+    for (const googleResponse of allGoogleResponses) {
+      const course: Course[] = await this.createCoursesFromGoogleResponse(classroomApi, googleResponse.data.courses);
+
+      allCourses = allCourses.concat(course);
+    }
 
     return allCourses;
   }
 
-  private static createCoursesFromGoogleResponse(googleCourses: classroom_v1.Schema$Course[]): Course[] {
+  private static async createCoursesFromGoogleResponse(
+    classroomApi: classroom_v1.Classroom,
+    googleCourses: classroom_v1.Schema$Course[]
+  ): Promise<Course[]> {
     const courses: Course[] = new Array();
 
-    googleCourses.forEach((googleCourse: classroom_v1.Schema$Course) => {
+    for (const googleCourse of googleCourses) {
+      const courseWorks: CourseWork[] = await CourseWorkUtil.getCourseWorkForCourse(classroomApi, googleCourse.id);
+
       courses.push({
         id : googleCourse.id,
         name : googleCourse.name,
-        link: googleCourse.alternateLink
+        link: googleCourse.alternateLink,
+        courseWorks: courseWorks
       });
-    });
+    }
 
     return courses;
   }
