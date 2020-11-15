@@ -1,4 +1,5 @@
 import MongoClient from 'mongodb';
+import {StudentsCollection} from '../../models/data/StudentsCollection';
 
 import {User} from '../../models/data/User';
 
@@ -35,6 +36,10 @@ export class MongoDbConnectorUtil {
 
   public static getUsersCollection(): MongoClient.Collection<User> {
     return MongoDbConnectorUtil.DB.collection<User>('Users');
+  }
+
+  public static getStudentsCollection(): MongoClient.Collection<StudentsCollection> {
+    return MongoDbConnectorUtil.DB.collection<StudentsCollection>('Students');
   }
 
   private static getOptionsForMongoClient() {
