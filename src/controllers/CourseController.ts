@@ -63,7 +63,7 @@ export class CourseController extends BaseController {
 
   private initUploadCourseStudents(): void {
     this.router.post(RouteConstants.Courses.POST_COURSE_STUDENTS, async (request: Request, response: Response) => {
-      let courseId: String;
+      let courseId: string;
       let fileContent: Buffer;
 
       try {
@@ -80,7 +80,17 @@ export class CourseController extends BaseController {
         return;
       }
 
-      response.sendStatus(200);
+      await StudentsUtil.storeStudentsInDb(courseId, fileContent)
+      .then(() => {
+        response.sendStatus(200);
+      }).catch((error: any) => {
+        ApplicationLogger.errorLog({
+          tag: CourseController.TAG,
+          message: 'Could not save students for course ' + error
+        });
+
+        response.sendStatus(500);
+      });
     });
   }
 
