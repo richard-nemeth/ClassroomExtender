@@ -38,7 +38,7 @@ export class CourseWorkUtil {
     }
   }
 
-  private static getDueDate(googleCourseWork: classroom_v1.Schema$CourseWork) {
+  private static getDueDate(googleCourseWork: classroom_v1.Schema$CourseWork): string {
     const date: Date = new Date();
     date.setUTCFullYear(
       googleCourseWork.dueDate.year,
@@ -52,6 +52,6 @@ export class CourseWorkUtil {
       googleCourseWork.dueTime.seconds ? googleCourseWork.dueTime.seconds : 0
     );
    
-    return date;
+    return date.toLocaleString();
   }
 }
