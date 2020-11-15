@@ -1,7 +1,6 @@
-import {Student} from "./Student";
-
+import { StoredStudentData } from "./StoredStudentData";
 export interface StudentsCollection {
   _id: string,
   courseId: string,
-  students: Student[]
+  students: StoredStudentData[]
 }
