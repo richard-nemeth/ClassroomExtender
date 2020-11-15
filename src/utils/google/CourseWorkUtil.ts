@@ -34,16 +34,24 @@ export class CourseWorkUtil {
       id: googleCourseWork.id,
       title: googleCourseWork.title,
       maxPoints: googleCourseWork.maxPoints,
-      dueDate: this.getCourseWorkDueDate(googleCourseWork.dueDate),
-      dueTime: this.getCourseWorkDueTime(googleCourseWork.dueTime)
+      dueDate: this.getDueDate(googleCourseWork)
     }
   }
 
-  private static getCourseWorkDueDate(dueDate: classroom_v1.Schema$Date): string {
-    return dueDate.year + "." + dueDate.month + "." + dueDate.day; 
-  }
+  private static getDueDate(googleCourseWork: classroom_v1.Schema$CourseWork) {
+    const date: Date = new Date();
+    date.setUTCFullYear(
+      googleCourseWork.dueDate.year,
+      googleCourseWork.dueDate.month,
+      googleCourseWork.dueDate.day
+    );
 
-  private static getCourseWorkDueTime(dueDate: classroom_v1.Schema$TimeOfDay): string {
-    return dueDate.hours + ":" + dueDate.minutes + ":" + dueDate.seconds;
+    date.setUTCHours(
+      googleCourseWork.dueTime.hours ? googleCourseWork.dueTime.hours : 0,
+      googleCourseWork.dueTime.minutes ? googleCourseWork.dueTime.minutes : 0,
+      googleCourseWork.dueTime.seconds ? googleCourseWork.dueTime.seconds : 0
+    );
+   
+    return date;
   }
 }
