@@ -7,6 +7,7 @@ import {RouteConstants} from '../utils/constants/RouteConstants';
 import {ControllerHelper} from '../utils/controller/ControllerHelper';
 
 import {CoursesUtil} from '../utils/google/CoursesUtil';
+import {StudentsUtil} from '../utils/mongodb/StudentsUtil';
 
 import {ApplicationLogger} from '../utils/logger/Logger';
 
@@ -62,7 +63,7 @@ export class CourseController extends BaseController {
 
   private initUploadCourseStudents(): void {
     this.router.post(RouteConstants.Courses.POST_COURSE_STUDENTS, async (request: Request, response: Response) => {
-      console.log(request.files);
+      StudentsUtil.storeStudentsInDb(request.files[0].buffer);
 
       response.sendStatus(200);
     });
